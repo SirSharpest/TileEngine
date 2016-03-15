@@ -171,7 +171,7 @@ void AnimatedSprite::update(sf::Time deltaTime)
 
             }
 
-            // set the current frame, not reseting the time
+            // set the current frame, not resetting the time
             setFrame(m_currentFrame, false);
         }
     }

@@ -56,7 +56,7 @@ private:
 	sf::Texture g_BackgroundTexture;
 
 	tileMap g_Map;
-
+	Player g_player;
 
 
 

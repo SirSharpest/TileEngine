@@ -15,7 +15,7 @@ void tileMap::load(std::vector<int> tiles, int width, int height, std::string fi
 
     quads.resize( width * height * 4);
 
-    int tileSize = 50;
+    int tileSize = 64;
 
     //Load the texture into memory
     if(!m_tileset.loadFromFile(fileToLoad))

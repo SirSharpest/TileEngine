@@ -14,7 +14,7 @@ a * Game.cpp
 
 
 Game::Game():
-g_Window(sf::VideoMode(640, 480), "SFML"),
+g_Window(sf::VideoMode(640, 640), "SFML"),
 g_AlexandriaFont(),
 FRAMES_PER_SECOND(60),
 TIME_PER_FRAME(sf::seconds(1.f/FRAMES_PER_SECOND)),
@@ -26,7 +26,8 @@ g_SplashScreenTexture(),
 g_SplashScreenSprite(),
 g_BackgroundSprite(),
 g_BackgroundTexture(),
-g_Map()
+g_Map(),
+g_player()
 {
 
 
@@ -52,21 +53,44 @@ g_Map()
 
     //12*9
 
-    for(int i = 0; i < 13; i++){
+    for(int i = 0; i < 10; i++){
 
         for(int j = 0; j < 10; j++){
-            myVec.push_back(5);
+            myVec.push_back(44);
         }
 
     }
 
 	//3x3
+	g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
 
 
+	//setup the player
+	std::string character = "images/char.png";
 
-	g_Map.load(myVec, 13, 10, "images/spriteSheet.png");
+	std::vector<sf::Vector2f> leftMovements, rightMovements, downMovements, upMovements;
 
+	leftMovements.push_back(sf::Vector2f(0, 62));
+	leftMovements.push_back(sf::Vector2f(62, 62));
+	leftMovements.push_back(sf::Vector2f(124, 62));
+	leftMovements.push_back(sf::Vector2f(186, 62));
 
+	rightMovements.push_back(sf::Vector2f(0, 124));
+	rightMovements.push_back(sf::Vector2f(62, 124));
+	rightMovements.push_back(sf::Vector2f(124, 124));
+	rightMovements.push_back(sf::Vector2f(186, 124));
+
+    upMovements.push_back(sf::Vector2f(0, 186));
+    upMovements.push_back(sf::Vector2f(62, 186));
+    upMovements.push_back(sf::Vector2f(124, 186));
+    upMovements.push_back(sf::Vector2f(186, 186));
+
+    downMovements.push_back(sf::Vector2f(0, 0));
+    downMovements.push_back(sf::Vector2f(62, 0));
+    downMovements.push_back(sf::Vector2f(124, 0));
+    downMovements.push_back(sf::Vector2f(186, 0));
+
+	g_player.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
 
 }
 
@@ -100,9 +124,7 @@ void Game::run(){
 	            updateFPSCounter(dt);
 	            render();
 
-
 	        }
-
 }
 
 
@@ -127,11 +149,15 @@ void Game::processEvents(){
 
 			if(g_GameState == PLAYING){
 				if(event.type == sf::Event::KeyPressed){
-					//handle input
+
+	                g_player.handlePlayerInput(event.key.code, true);
+
 				}
 
 				if(event.type == sf::Event::KeyReleased){
 					//handle input
+                    g_player.handlePlayerInput(event.key.code, false);
+
 				}
 
 			}
@@ -146,6 +172,7 @@ void Game::update(sf::Time elapsedTime){
 
 
 	handleCollisions();
+    g_player.updatePlayer(elapsedTime);
 
 
 }
@@ -198,6 +225,7 @@ void Game::render(){
 			break;
 		case PLAYING:
 			g_Window.draw(g_Map);
+			g_Window.draw(g_player.getAnimatedPlayer());
 			break;
 		default:
 			break;

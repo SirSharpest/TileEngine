@@ -12,36 +12,41 @@
 #include "AnimatedSprite.hpp"
 
 Player::Player():
-mSpeed(200.f),
-movement(0.f, 0.f),
-mSize(1,1),
-mPosX(0),
-mPosY(0),
-mColor(sf::Color::Blue),
-mIsMovingUp(false),
-mIsMovingDown(false),
-mIsMovingLeft(false),
-mIsMovingRight(false),
-mIsTurbo(false),
-mIsMoving(true),
-mIsOnGround(false),
-mMayJumpAgain(false),
-characterSprite(),
-walkingAnimationDown(),
-walkingAnimationLeft(),
-walkingAnimationRight(),
-walkingAnimationUp(),
-currentAnimation(&walkingAnimationRight),
-animatedPlayer(sf::seconds(0.2), true, false){
+        mSpeed(200.f),
+        movement(0.f, 0.f),
+        mSize(1,1),
+        mPosX(0),
+        mPosY(0),
+        mColor(sf::Color::Blue),
+        mIsMovingUp(false),
+        mIsMovingDown(false),
+        mIsMovingLeft(false),
+        mIsMovingRight(false),
+        mIsTurbo(false),
+        mIsMoving(false),
+        characterSprite(),
+        walkingAnimationDown(),
+        walkingAnimationLeft(),
+        walkingAnimationRight(),
+        walkingAnimationUp(),
+        currentAnimation(&walkingAnimationRight) {
 
 
 
-	//load sprite's texture
-	characterSprite.loadFromFile("images/mageCharacter.png");
 
+}
+
+
+void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements, std::vector<sf::Vector2f> rightMovements,
+			   std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements){
+
+
+
+	characterSprite.loadFromFile(fileLocation);
 
 	//apply animations to image
-	setupAnimation(characterSprite);
+	setupAnimation(characterSprite, h ,w , leftMovements, rightMovements, upMovements, downMovements);
+
 	//Increasing the size of the image
     animatedPlayer.setScale(mSize);
 	//animated sprite properties
@@ -72,20 +77,15 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
 
 //perform movement for the player
-sf::Vector2f Player::updatePlayer(sf::Time elapsedTime, int groundHeight){
+sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 
 
 		//reset speed of movement and animation
 		float movementSpeed = mSpeed;
 		animatedPlayer.setFrameTime(sf::seconds(0.2));
-		int playerHeight = 70;
 
-		groundHeight -= playerHeight;
-
-
-
-		//To return
+		//To return and to move
 		sf::Vector2f totalMovement(0,0);
 
 		/*
@@ -93,99 +93,65 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime, int groundHeight){
 		 */
 		if(mIsTurbo){
 			movementSpeed = mSpeed * 5;
-			animatedPlayer.setFrameTime(sf::seconds(0.04));}
-
-		if(animatedPlayer.getPosition().y >= groundHeight){
-			mIsOnGround = true;
-		}
-		else if (animatedPlayer.getPosition().y < groundHeight){
-			mIsOnGround = false;
+			animatedPlayer.setFrameTime(sf::seconds(0.04));
 		}
 
 
-		//https://wiki.allegro.cc/index.php?title=How_to_implement_jumping_in_platformers
-		//get this sorted for jump mechanic
-		if(mIsOnGround){
-			if(mIsMovingUp){
 
-				if(mMayJumpAgain){
-
-					movement.y += - (movementSpeed * 15);
-					mMayJumpAgain = false;
-
-
-				}
-				else{
-					mMayJumpAgain = true;
-				}
-
-				}
-		}
-
-		//really should be slightly different
-		//left in for debugging and testing
-		//TODO: find better solution
 		if(mIsMovingDown){
-			movement.y = movementSpeed;
+			totalMovement.y = movementSpeed;
 			}
 		if(mIsMovingLeft){
-			movement.x = -movementSpeed;
+			totalMovement.x = -movementSpeed;
+			currentAnimation = &walkingAnimationLeft;
 			}
 		if(mIsMovingRight){
-			movement.x = movementSpeed;
-			currentAnimation = &walkingAnimationRight;}
-
-
-
-		if(mIsMovingUp && !mIsOnGround){
-			movement.y += movementSpeed;
+			totalMovement.x = movementSpeed;
+			currentAnimation = &walkingAnimationRight;
+		}
+		if(mIsMovingUp){
+			totalMovement.y = -movementSpeed;
 		}
 
-			animatedPlayer.play(*currentAnimation);
 
-			if(movement.x == 0 && movement.y == 0){
-				animatedPlayer.pause();
-			}
+		animatedPlayer.play(*currentAnimation);
 
-
-		//test here for an idea for gravity
-		//TODO Fix this up and make usable
-		//80 is the players height
-		if(animatedPlayer.getPosition().y < groundHeight){
-			movement.y += movementSpeed  ;
-			if(movement.y > (movementSpeed * 3 )){
-				movement.y = movementSpeed * 3;
-			}
+		if(totalMovement.x == 0 && totalMovement.y == 0){
+			animatedPlayer.pause();
 		}
 
-		//bug here for if moving up or down, then this wont reset
-		//meaning that we can clip and drop further than screen
-		if(!mIsMovingUp && mIsOnGround){
-			movement.y = 0;
-		}
-		if(!mIsMovingLeft && !mIsMovingRight){
-			movement.x = 0;
-		}
 
-			animatedPlayer.move(movement * elapsedTime.asSeconds());
-			animatedPlayer.update(elapsedTime);
+		animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
+		animatedPlayer.update(elapsedTime);
 
 
-
-			totalMovement.x += movement.x * elapsedTime.asSeconds();
-
-			return totalMovement;
+		return totalMovement;
 }
 
-void Player::setupAnimation(sf::Texture &texture){
+void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements, std::vector<sf::Vector2f> rightMovements,
+							std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements){
 
 
 
-    walkingAnimationRight.addFrame(sf::IntRect(42, 108, 45, 67));
-    walkingAnimationRight.addFrame(sf::IntRect(124, 108, 45, 67));
-    walkingAnimationRight.addFrame(sf::IntRect(207, 108, 45, 67));
-    walkingAnimationRight.addFrame(sf::IntRect(285, 108, 45, 67));
-    walkingAnimationRight.setSpriteSheet(texture);
+	for(int i = 0; i < leftMovements.size(); i++){
+		walkingAnimationLeft.addFrame(sf::IntRect(leftMovements[i].x, leftMovements[i].y, w, h));
+	}
+	walkingAnimationLeft.setSpriteSheet(texture);
+
+	for(int i = 0; i < rightMovements.size(); i++){
+		walkingAnimationRight.addFrame(sf::IntRect(rightMovements[i].x, rightMovements[i].y, w, h));
+	}
+	walkingAnimationRight.setSpriteSheet(texture);
+
+	for(int i = 0; i < upMovements.size(); i++){
+		walkingAnimationUp.addFrame(sf::IntRect(upMovements[i].x, upMovements[i].y, w, h));
+	}
+
+
+	for(int i = 0; i < downMovements.size(); i++){
+		walkingAnimationDown.addFrame(sf::IntRect(downMovements[i].x, downMovements[i].y, w, h));
+	}
+
 
 
 }
