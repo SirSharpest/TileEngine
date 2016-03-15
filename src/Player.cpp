@@ -9,7 +9,6 @@
  */
 
 #include "Player.hpp"
-#include "AnimatedSprite.hpp"
 
 Player::Player():
         mSpeed(200.f),
@@ -137,22 +136,22 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 
 
 	for(int i = 0; i < leftMovements.size(); i++){
-		walkingAnimationLeft.addFrame(sf::IntRect(leftMovements[i].x, leftMovements[i].y, w, h));
+		walkingAnimationLeft.addFrame(sf::IntRect((int) leftMovements[i].x, (int) leftMovements[i].y, w, h));
 	}
 	walkingAnimationLeft.setSpriteSheet(texture);
 
 	for(int i = 0; i < rightMovements.size(); i++){
-		walkingAnimationRight.addFrame(sf::IntRect(rightMovements[i].x, rightMovements[i].y, w, h));
+		walkingAnimationRight.addFrame(sf::IntRect((int) rightMovements[i].x, (int) rightMovements[i].y, w, h));
 	}
 	walkingAnimationRight.setSpriteSheet(texture);
 
 	for(int i = 0; i < upMovements.size(); i++){
-		walkingAnimationUp.addFrame(sf::IntRect(upMovements[i].x, upMovements[i].y, w, h));
+		walkingAnimationUp.addFrame(sf::IntRect((int) upMovements[i].x, (int) upMovements[i].y, w, h));
 	}
 	walkingAnimationUp.setSpriteSheet(texture);
 
 	for(int i = 0; i < downMovements.size(); i++){
-		walkingAnimationDown.addFrame(sf::IntRect(downMovements[i].x, downMovements[i].y, w, h));
+		walkingAnimationDown.addFrame(sf::IntRect((int) downMovements[i].x, (int) downMovements[i].y, w, h));
 	}
 	walkingAnimationDown.setSpriteSheet(texture);
 
@@ -167,7 +166,6 @@ AnimatedSprite Player::getAnimatedPlayer(){
 
 
 Player::~Player() {
-	// TODO Auto-generated destructor stub
 }
 
 void Player::reverseLastMove() {
