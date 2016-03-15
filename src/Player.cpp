@@ -29,7 +29,8 @@ Player::Player():
         walkingAnimationLeft(),
         walkingAnimationRight(),
         walkingAnimationUp(),
-        currentAnimation(&walkingAnimationRight) {
+        currentAnimation(&walkingAnimationRight),
+		lastMovement(0,0){
 
 
 
@@ -100,6 +101,7 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 		if(mIsMovingDown){
 			totalMovement.y = movementSpeed;
+			currentAnimation = &walkingAnimationDown;
 			}
 		if(mIsMovingLeft){
 			totalMovement.x = -movementSpeed;
@@ -111,6 +113,7 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		}
 		if(mIsMovingUp){
 			totalMovement.y = -movementSpeed;
+			currentAnimation = &walkingAnimationUp;
 		}
 
 
@@ -124,7 +127,7 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
 		animatedPlayer.update(elapsedTime);
 
-
+		lastMovement = totalMovement *elapsedTime.asSeconds();
 		return totalMovement;
 }
 
@@ -146,12 +149,12 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 	for(int i = 0; i < upMovements.size(); i++){
 		walkingAnimationUp.addFrame(sf::IntRect(upMovements[i].x, upMovements[i].y, w, h));
 	}
-
+	walkingAnimationUp.setSpriteSheet(texture);
 
 	for(int i = 0; i < downMovements.size(); i++){
 		walkingAnimationDown.addFrame(sf::IntRect(downMovements[i].x, downMovements[i].y, w, h));
 	}
-
+	walkingAnimationDown.setSpriteSheet(texture);
 
 
 }
@@ -167,3 +170,8 @@ Player::~Player() {
 	// TODO Auto-generated destructor stub
 }
 
+void Player::reverseLastMove() {
+
+	animatedPlayer.move(lastMovement.x *-1, lastMovement.y*-1);
+
+}

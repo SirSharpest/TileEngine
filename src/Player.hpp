@@ -22,7 +22,7 @@ public:
 	void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements, std::vector<sf::Vector2f> rightMovements,
 						std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
 	AnimatedSprite getAnimatedPlayer();
-
+	void reverseLastMove();
 
 private:
 
@@ -47,6 +47,8 @@ private:
 	Animation* currentAnimation;
 
 	AnimatedSprite animatedPlayer;
+
+	sf::Vector2f lastMovement;
 
 };
 

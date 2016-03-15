@@ -33,7 +33,7 @@ g_player()
 
 	//setting window properties
 	g_Window.setVerticalSyncEnabled(false);
-	g_Window.setFramerateLimit(FRAMES_PER_SECOND);
+	g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
 
 
 	//setting font location
@@ -180,6 +180,17 @@ void Game::update(sf::Time elapsedTime){
 
 //Put all the collision checking and handling here
 void Game::handleCollisions(){
+
+    //Ensure that player is always within this rect?
+    sf::FloatRect bounds (64,64, 640-124, 640-124 );
+
+    if(g_GameState == PLAYING) {
+        if (!g_player.getAnimatedPlayer().getGlobalBounds().intersects(bounds)) {
+            g_player.reverseLastMove();
+        }
+    }
+
+
 
 }
 
