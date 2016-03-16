@@ -182,7 +182,8 @@ void Game::update(sf::Time elapsedTime){
 void Game::handleCollisions(){
 
     //Ensure that player is always within this rect?
-    sf::FloatRect bounds (64,64, 640-124, 640-124 );
+	//For a 640,640 map and a 64x64 player this should keep within bounds
+    sf::FloatRect bounds (60,60, 640-124, 640-124 );
 
     if(g_GameState == PLAYING) {
         if (!g_player.getAnimatedPlayer().getGlobalBounds().intersects(bounds)) {
