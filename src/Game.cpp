@@ -1,5 +1,5 @@
 /*
-a * Game.cpp
+ * Game.cpp
  *
  *  Created on: 24 Mar 2015
  *      Author: Nathan Hughes
@@ -48,49 +48,9 @@ g_player()
 	g_Fps.setFont(g_AlexandriaFont);
 	g_Fps.setPosition(0,0);
 
-
-	std::vector<int> myVec;
-
-    //12*9
-
-    for(int i = 0; i < 10; i++){
-
-        for(int j = 0; j < 10; j++){
-            myVec.push_back(44);
-        }
-
-    }
-
-	//3x3
-	g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
-
-
-	//setup the player
-	std::string character = "images/char.png";
-
-	std::vector<sf::Vector2f> leftMovements, rightMovements, downMovements, upMovements;
-
-	leftMovements.push_back(sf::Vector2f(0, 62));
-	leftMovements.push_back(sf::Vector2f(62, 62));
-	leftMovements.push_back(sf::Vector2f(124, 62));
-	leftMovements.push_back(sf::Vector2f(186, 62));
-
-	rightMovements.push_back(sf::Vector2f(0, 124));
-	rightMovements.push_back(sf::Vector2f(62, 124));
-	rightMovements.push_back(sf::Vector2f(124, 124));
-	rightMovements.push_back(sf::Vector2f(186, 124));
-
-    upMovements.push_back(sf::Vector2f(0, 186));
-    upMovements.push_back(sf::Vector2f(62, 186));
-    upMovements.push_back(sf::Vector2f(124, 186));
-    upMovements.push_back(sf::Vector2f(186, 186));
-
-    downMovements.push_back(sf::Vector2f(0, 0));
-    downMovements.push_back(sf::Vector2f(62, 0));
-    downMovements.push_back(sf::Vector2f(124, 0));
-    downMovements.push_back(sf::Vector2f(186, 0));
-
-	g_player.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
+    //Set up some of the finner details of the game
+    setUpMap();
+	setUpPlayerMovements();
 
 }
 
@@ -248,6 +208,63 @@ void Game::render(){
 
 
 }
+
+void Game::setUpPlayerMovements() {
+
+
+	//setup the player
+	std::string character = "images/char.png";
+
+
+	std::vector<sf::Vector2f> leftMovements, rightMovements, downMovements, upMovements;
+
+	leftMovements.push_back(sf::Vector2f(0, 62));
+	leftMovements.push_back(sf::Vector2f(62, 62));
+	leftMovements.push_back(sf::Vector2f(124, 62));
+	leftMovements.push_back(sf::Vector2f(186, 62));
+
+	rightMovements.push_back(sf::Vector2f(0, 124));
+	rightMovements.push_back(sf::Vector2f(62, 124));
+	rightMovements.push_back(sf::Vector2f(124, 124));
+	rightMovements.push_back(sf::Vector2f(186, 124));
+
+	upMovements.push_back(sf::Vector2f(0, 186));
+	upMovements.push_back(sf::Vector2f(62, 186));
+	upMovements.push_back(sf::Vector2f(124, 186));
+	upMovements.push_back(sf::Vector2f(186, 186));
+
+	downMovements.push_back(sf::Vector2f(0, 0));
+	downMovements.push_back(sf::Vector2f(62, 0));
+	downMovements.push_back(sf::Vector2f(124, 0));
+	downMovements.push_back(sf::Vector2f(186, 0));
+
+	g_player.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
+
+
+}
+
+void Game::setUpMap() {
+
+    std::vector<int> myVec;
+
+    //12*9
+    for(int i = 0; i < 10; i++){
+
+        for(int j = 0; j < 10; j++){
+            myVec.push_back(44);
+        }
+
+    }
+
+    //3x3
+    g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
+
+
+}
+
+
+
+
 
 
 
