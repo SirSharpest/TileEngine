@@ -113,12 +113,11 @@ void Game::run(){
 	            timeSinceLastUpdate += dt;
 
 
-	            while(timeSinceLastUpdate > TIME_PER_FRAME)
-	            {
+	            while(timeSinceLastUpdate > TIME_PER_FRAME) {
 
 	            	timeSinceLastUpdate -= TIME_PER_FRAME;
 	                processEvents();
-	                update(TIME_PER_FRAME);
+	                update(dt);
 
 	            }
 	            updateFPSCounter(dt);
