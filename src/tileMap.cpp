@@ -13,7 +13,7 @@ void tileMap::load(std::vector<int> tiles, int width, int height, std::string fi
 
     quads.setPrimitiveType(sf::Quads); //Set as a type quads
 
-    quads.resize( width * height * 4);
+    quads.resize((size_t) (width * height * 4));
 
     int tileSize = 64;
 

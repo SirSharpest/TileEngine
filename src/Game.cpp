@@ -27,10 +27,12 @@ g_SplashScreenSprite(),
 g_BackgroundSprite(),
 g_BackgroundTexture(),
 g_Map(),
-g_player()
+g_player(),
+g_pokeballTexture(),
+g_pokeball(),
+g_scoreText(),
+g_score(0)
 {
-
-
 	//setting window properties
 	g_Window.setVerticalSyncEnabled(false);
 	g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
@@ -48,9 +50,24 @@ g_player()
 	g_Fps.setFont(g_AlexandriaFont);
 	g_Fps.setPosition(0,0);
 
-    //Set up some of the finner details of the game
+	//setting the score info
+	g_scoreText.setFont(g_AlexandriaFont);
+	g_scoreText.setPosition(220,150);
+	g_scoreText.setScale(10,10);
+	g_scoreText.setString("0");
+
+
+	//Set up some of the finner details of the game
     setUpMap();
 	setUpPlayerMovements();
+
+	//Load sprites
+	g_pokeballTexture.loadFromFile("images/pickup.png");
+	g_pokeball.setup(g_pokeballTexture);
+	g_pokeball.setPosition(250,250);
+
+	/* initialize random seed: */
+	srand ((unsigned int) time(NULL));
 
 }
 
@@ -148,9 +165,27 @@ void Game::handleCollisions(){
         if (!g_player.getAnimatedPlayer().getGlobalBounds().intersects(bounds)) {
             g_player.reverseLastMove();
         }
+
+
+		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getBounds())){
+
+			/* generate secret number between 1 and 10: */
+			int x = rand() % 620 + 10;
+			int y = rand() % 620 + 10;
+
+			g_pokeball.setPosition(x,y);
+
+			g_score++;
+
+			std::ostringstream convert;   // stream used for the conversion
+
+			convert << g_score;      // insert the textual representation of 'Number' in the characters in the stream
+
+			g_scoreText.setString(convert.str()); // set 'Result' to the contents of the stream
+
+
+		}
     }
-
-
 
 }
 
@@ -189,6 +224,8 @@ void Game::render(){
 		case PLAYING:
 			g_Window.draw(g_Map);
 			g_Window.draw(g_player.getAnimatedPlayer());
+			g_Window.draw(g_pokeball);
+			g_Window.draw(g_scoreText);
 			break;
 		default:
 			break;

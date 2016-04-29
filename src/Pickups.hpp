@@ -28,13 +28,11 @@ public:
      * Setup the initial pickup
      * Takes the XY location of an image file and then the size on the sprite sheet itself and loads it into memory
      */
-    Pickups(sf::Texture image, sf::Vector2f size);
+    Pickups();
 
-    /**
-     * over loaded constructor that doesn't need a size
-     */
-    Pickups(sf::Texture image);
+    void setup(sf::Texture &image);
 
+    sf::FloatRect getBounds();
 
 
 };

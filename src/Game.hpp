@@ -9,6 +9,9 @@
 #include <string.h>
 #include "Player.hpp"
 #include <tileMap.hpp>
+#include <Pickups.hpp>
+#include <stdlib.h>
+#include <time.h>
 
 #ifndef GAME_H_
 #define GAME_H_
@@ -25,7 +28,6 @@ private:
 	void update(sf::Time elapsedTime);
 	void render();
 	void processEvents();
-	bool isRectCollision(sf::Sprite &rect1, sf::Sprite &rect2);
 	void handleCollisions();
 	void updateFPSCounter(sf::Time dt);
 
@@ -66,6 +68,12 @@ private:
 	tileMap g_Map;
 	Player g_player;
 
+	sf::Texture g_pokeballTexture;
+
+	Pickups g_pokeball;
+
+	sf::Text g_scoreText;
+	u_int g_score;
 
 
 };
