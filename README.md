@@ -3,6 +3,9 @@
 ![example Picture](https://github.com/SirSharpest/TileEngine/blob/master/images/tile.png)
 
 
+###Requirements
+SFML is required for this to run!
+
 ###What is this?
 This is just a simple engine with potential to a lot of different things
 
