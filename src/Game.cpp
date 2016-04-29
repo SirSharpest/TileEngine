@@ -155,14 +155,6 @@ void Game::handleCollisions(){
 }
 
 
-//check rectangles for collision without taking into account where the collision is
-//bool Game::isRectCollision(sf::Sprite &sprite1, sf::Sprite &sprite2){
-//
-//		sf::FloatRect r1=sprite1.getGlobalBounds();
-//	    sf::FloatRect r2=sprite2.getGlobalBounds();
-//	    return r1.intersects(r2);
-//
-//}
 
 
 void Game::updateFPSCounter(sf::Time dt){
