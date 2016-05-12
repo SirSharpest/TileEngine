@@ -12,15 +12,13 @@
 #include <SFML/Graphics.hpp>
 
 
-class Pickups : public sf::Drawable, public sf::Transformable{
+class Pickups : public sf::Sprite{
 
 private:
     sf::Texture m_image;
-    sf::Sprite m_sprite;
     sf::Vector2f m_position, m_size;
     int m_posX, posY;
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
 

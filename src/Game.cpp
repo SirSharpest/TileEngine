@@ -62,9 +62,10 @@ g_score(0)
 	setUpPlayerMovements();
 
 	//Load sprites
-	g_pokeballTexture.loadFromFile("images/pickup.png");
+	g_pokeballTexture.loadFromFile("images/Pokeball.png");
 	g_pokeball.setup(g_pokeballTexture);
 	g_pokeball.setPosition(250,250);
+	g_pokeball.setScale(0.2,0.2);
 
 	/* initialize random seed: */
 	srand ((unsigned int) time(NULL));
