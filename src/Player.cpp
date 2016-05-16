@@ -59,7 +59,6 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 //is given the key that has been pressed and handles the input for it
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
-
 	if(key == sf::Keyboard::W)
 		mIsMovingUp = isPressed;
 	else if(key == sf::Keyboard::S)
@@ -70,8 +69,6 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 		mIsMovingRight = isPressed;
 	else if (key == sf::Keyboard::Space)
 		mIsTurbo = isPressed;
-
-
 
 }
 
@@ -95,8 +92,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 			movementSpeed = mSpeed * 5;
 			animatedPlayer.setFrameTime(sf::seconds(0.04));
 		}
-
-
 
 		if(mIsMovingDown){
 			totalMovement.y = movementSpeed;

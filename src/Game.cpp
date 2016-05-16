@@ -124,13 +124,22 @@ void Game::processEvents(){
 				}
 			}
 
-			if(g_GameState == PLAYING){
-				if(event.type == sf::Event::KeyPressed){
+
+            if(g_GameState == PLAYING){
+
+
+                /*
+                 * TODO: When a key is pressed the user should advance one tile in that direction
+                 * TODO: When a key is held, this should continue moving in a linear fashion
+                 * TODO: KeyReleased should also signal a kill to movement
+                 * TODO: Fix issue, movement won't still be handled if a gap between press and release
+                 */
+
+                if(event.type == sf::Event::KeyPressed){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
 
 				if(event.type == sf::Event::KeyReleased){
-					//handle input
                     g_player.handlePlayerInput(event.key.code, false);
 				}
 
@@ -155,16 +164,21 @@ void Game::update(sf::Time elapsedTime){
 //Put all the collision checking and handling here
 void Game::handleCollisions(){
 
-    //Ensure that player is always within this rect?
-	//For a 640,640 map and a 64x64 player this should keep within bounds
-    sf::FloatRect bounds (60,60, 640-124, 640-124 );
+	/*
+	 *
+	 *  Removed collision detection for free flowing movement
+	 *  Transition to tile-based movement means we should carry that as a
+	 *  Reference instead TODO: Add this detection
+	 *
+	 */
 
-    if(g_GameState == PLAYING) {
-        if (!g_player.getAnimatedPlayer().getGlobalBounds().intersects(bounds)) {
-            g_player.reverseLastMove();
-        }
 
-
+		/*
+		 *
+		 * For testing purposes this randomiser is fine
+		 * TODO: When updating position by XY (same as movement) update this too!
+		 *
+		 */
 		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getGlobalBounds())){
 
 			/* generate secret number between 1 and 10: */
@@ -184,10 +198,6 @@ void Game::handleCollisions(){
 
 		}
     }
-
-}
-
-
 
 
 void Game::updateFPSCounter(sf::Time dt){
