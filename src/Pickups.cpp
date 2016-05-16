@@ -20,12 +20,7 @@ void Pickups::setup(sf::Texture &image){
 
 
 
-sf::FloatRect Pickups::getBounds() {
-   // return sf::FloatRect(this->getPosition().x, this.gets, this->, this->getBounds().height);
 
-    return this->getGlobalBounds();
-
-}
 
 
 

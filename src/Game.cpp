@@ -126,15 +126,12 @@ void Game::processEvents(){
 
 			if(g_GameState == PLAYING){
 				if(event.type == sf::Event::KeyPressed){
-
 	                g_player.handlePlayerInput(event.key.code, true);
-
 				}
 
 				if(event.type == sf::Event::KeyReleased){
 					//handle input
                     g_player.handlePlayerInput(event.key.code, false);
-
 				}
 
 			}
@@ -168,7 +165,7 @@ void Game::handleCollisions(){
         }
 
 
-		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getBounds())){
+		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getGlobalBounds())){
 
 			/* generate secret number between 1 and 10: */
 			int x = rand() % 620 + 10;

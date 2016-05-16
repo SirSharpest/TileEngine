@@ -30,7 +30,6 @@ public:
 
     void setup(sf::Texture &image);
 
-    sf::FloatRect getBounds();
 
 
 };
