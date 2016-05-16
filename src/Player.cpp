@@ -12,11 +12,9 @@
 #include "Player.hpp"
 
 Player::Player():
-        mSpeed(200.f),
+        mSpeed(200.f), //TODO: mSpeed should become something around the size of the tile
         movement(0.f, 0.f),
         mSize(1,1),
-        mPosX(0),
-        mPosY(0),
         mColor(sf::Color::Blue),
         mIsMovingUp(false),
         mIsMovingDown(false),
@@ -51,7 +49,8 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 	//Increasing the size of the image
     animatedPlayer.setScale(mSize);
 	//animated sprite properties
-	animatedPlayer.setPosition(mPosX, mPosY);
+	//default values for now
+	animatedPlayer.setPosition(0, 0);
 
 
 

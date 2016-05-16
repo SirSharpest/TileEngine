@@ -30,8 +30,6 @@ private:
 	float mSpeed;
 	sf::Vector2f movement;
 	sf::Vector2f mSize;
-	int mPosX;
-	int mPosY;
 	sf::Color mColor;
 
 	//movement flags for player

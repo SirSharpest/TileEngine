@@ -40,6 +40,7 @@ g_score(0)
 
 	//setting font location
 	g_AlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
+
 	//loading splash screen
 	g_SplashScreenTexture.loadFromFile("images/intro.png");
 	g_SplashScreenSprite.setTexture(g_SplashScreenTexture);
@@ -62,7 +63,7 @@ g_score(0)
 	setUpPlayerMovements();
 
 	//Load sprites
-	g_pokeballTexture.loadFromFile("images/Pokeball.png");
+	g_pokeballTexture.loadFromFile("images/pickup.png");
 	g_pokeball.setup(g_pokeballTexture);
 	g_pokeball.setPosition(250,250);
 	g_pokeball.setScale(0.2,0.2);
@@ -126,7 +127,6 @@ void Game::processEvents(){
 
 
             if(g_GameState == PLAYING){
-
 
                 /*
                  * TODO: When a key is pressed the user should advance one tile in that direction
