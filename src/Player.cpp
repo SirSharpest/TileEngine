@@ -8,6 +8,7 @@
  *
  */
 
+#include <iostream>
 #include "Player.hpp"
 
 Player::Player():
@@ -122,6 +123,14 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		animatedPlayer.update(elapsedTime);
 
 		lastMovement = totalMovement *elapsedTime.asSeconds();
+
+	/*
+	 * TODO: Remove this when done testing
+	 */
+	std::cout << "X:" <<  this->animatedPlayer.getGlobalBounds().left << "\t" << "Y:" <<
+			this->animatedPlayer.getGlobalBounds().top <<
+			std::endl;
+
 		return totalMovement;
 }
 

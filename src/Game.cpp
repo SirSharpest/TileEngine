@@ -179,24 +179,7 @@ void Game::handleCollisions(){
 		 * TODO: When updating position by XY (same as movement) update this too!
 		 *
 		 */
-		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getGlobalBounds())){
 
-			/* generate secret number between 1 and 10: */
-			int x = rand() % 620 + 10;
-			int y = rand() % 620 + 10;
-
-			g_pokeball.setPosition(x,y);
-
-			g_score++;
-
-			std::ostringstream convert;   // stream used for the conversion
-
-			convert << g_score;      // insert the textual representation of 'Number' in the characters in the stream
-
-			g_scoreText.setString(convert.str()); // set 'Result' to the contents of the stream
-
-
-		}
     }
 
 
