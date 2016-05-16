@@ -86,8 +86,7 @@ void Game::run(){
 
 			//main loop to run the entire length of games
 			//life
-	        while (g_Window.isOpen())
-	        {
+	        while (g_Window.isOpen()) {
 	            sf::Time dt = clock.restart();
 	            timeSinceLastUpdate += dt;
 
@@ -97,11 +96,9 @@ void Game::run(){
 	            	timeSinceLastUpdate -= TIME_PER_FRAME;
 	                processEvents();
 	                update(dt);
-
 	            }
 	            updateFPSCounter(dt);
 	            render();
-
 	        }
 }
 
@@ -147,7 +144,6 @@ void Game::processEvents(){
 
 		}
 
-
 }
 
 //perform logic and call for collision checks
@@ -164,20 +160,8 @@ void Game::update(sf::Time elapsedTime){
 //Put all the collision checking and handling here
 void Game::handleCollisions(){
 
-	/*
-	 *
-	 *  Removed collision detection for free flowing movement
-	 *  Transition to tile-based movement means we should carry that as a
-	 *  Reference instead TODO: Add this detection
-	 *
-	 */
-
-
 		/*
-		 *
-		 * For testing purposes this randomiser is fine
-		 * TODO: When updating position by XY (same as movement) update this too!
-		 *
+		 * TODO: ALL OF THIS!!!!!
 		 */
 
     }

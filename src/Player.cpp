@@ -4,7 +4,7 @@
  *  Created on: 2 Apr 2015
  *      Author: nathan
  *
- *  Currently loads a wizard sprite
+ *  Currently loads a  sprite
  *
  */
 
@@ -133,7 +133,8 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		return totalMovement;
 }
 
-void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements, std::vector<sf::Vector2f> rightMovements,
+void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
+							std::vector<sf::Vector2f> rightMovements,
 							std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements){
 
 
