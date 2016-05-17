@@ -28,13 +28,11 @@ g_BackgroundSprite(),
 g_BackgroundTexture(),
 g_Map(),
 g_player(),
-g_pokeballTexture(),
-g_pokeball(),
 g_scoreText(),
 g_score(0)
 {
 	//setting window properties
-	g_Window.setVerticalSyncEnabled(false);
+	g_Window.setVerticalSyncEnabled(true);
 	g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
 
 
@@ -62,11 +60,7 @@ g_score(0)
     setUpMap();
 	setUpPlayerMovements();
 
-	//Load sprites
-	g_pokeballTexture.loadFromFile("images/pickup.png");
-	g_pokeball.setup(g_pokeballTexture);
-	g_pokeball.setPosition(250,250);
-	g_pokeball.setScale(0.2,0.2);
+
 
 	/* initialize random seed: */
 	srand ((unsigned int) time(NULL));
@@ -202,8 +196,6 @@ void Game::render(){
 		case PLAYING:
 			g_Window.draw(g_Map);
 			g_Window.draw(g_player.getAnimatedPlayer());
-			g_Window.draw(g_pokeball);
-			g_Window.draw(g_scoreText);
 			break;
 		default:
 			break;

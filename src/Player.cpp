@@ -12,7 +12,7 @@
 #include "Player.hpp"
 
 Player::Player():
-        mSpeed(200.f),
+        mSpeed(196.f),
         mTileSize(64.f),
         mTravelled(0),
         movement(0.f, 0.f),
@@ -61,6 +61,15 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 //is given the key that has been pressed and handles the input for it
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
+
+
+	//Needed to reset distance traveled
+	if(isPressed && mTravelled >= mTileSize){
+		mTravelled = 0;
+		mIsMoving = false;
+	}
+
+
     //if not already moving
     if(!mIsMoving){
         if(key == sf::Keyboard::W)
@@ -73,9 +82,6 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
             mIsMovingRight = isPressed;
     }
 
-    if(isPressed && mTravelled >= mTileSize)
-        mTravelled = 0;
-
 }
 
 
@@ -84,7 +90,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
         //Stop moving if reached destination
         if(mTravelled >= mTileSize){
-
             mIsMovingDown = false;
             mIsMovingUp = false;
             mIsMovingRight = false;
@@ -95,7 +100,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 		//reset speed of movement and animation
 		float movementSpeed = mSpeed;
-		animatedPlayer.setFrameTime(sf::seconds(0.2));
 
 		//To return and to move
 		sf::Vector2f totalMovement(0,0);
@@ -106,18 +110,24 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		if(mIsMovingDown){
 			totalMovement.y = movementSpeed;
 			currentAnimation = &walkingAnimationDown;
+			mIsMoving = true;
 			}
 		else if(mIsMovingLeft){
 			totalMovement.x = -movementSpeed;
 			currentAnimation = &walkingAnimationLeft;
+			mIsMoving = true;
 			}
 		else if(mIsMovingRight){
 			totalMovement.x = movementSpeed;
 			currentAnimation = &walkingAnimationRight;
+			mIsMoving = true;
 		}
 		else if(mIsMovingUp){
 			totalMovement.y = -movementSpeed;
 			currentAnimation = &walkingAnimationUp;
+			mIsMoving = true;
+		}else{
+			mIsMoving = false;
 		}
 
 
@@ -138,9 +148,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
         //One of these should be 0 and the other a value anyway, so can cheat a little and sum both
         mTravelled += abs(
                 (int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
-
-
-        mIsMoving = (bool) mTravelled;
 
 
 		return totalMovement;
@@ -172,6 +179,8 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 	}
 	walkingAnimationDown.setSpriteSheet(texture);
 
+	animatedPlayer.setFrameTime(sf::seconds(0.1));
+
 
 }
 
@@ -190,3 +199,10 @@ void Player::reverseLastMove() {
 	animatedPlayer.move(lastMovement.x *-1, lastMovement.y*-1);
 
 }
+
+
+
+
+
+
+
