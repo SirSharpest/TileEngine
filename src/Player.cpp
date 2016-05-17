@@ -12,7 +12,9 @@
 #include "Player.hpp"
 
 Player::Player():
-        mSpeed(200.f), //TODO: mSpeed should become something around the size of the tile
+        mSpeed(200.f),
+        mTileSize(64.f),
+        mTravelled(0),
         movement(0.f, 0.f),
         mSize(1,1),
         mColor(sf::Color::Blue),
@@ -59,16 +61,20 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 //is given the key that has been pressed and handles the input for it
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
-	if(key == sf::Keyboard::W)
-		mIsMovingUp = isPressed;
-	else if(key == sf::Keyboard::S)
-		mIsMovingDown = isPressed;
-	else if(key == sf::Keyboard::A)
-		mIsMovingLeft = isPressed;
-	else if(key == sf::Keyboard::D)
-		mIsMovingRight = isPressed;
-	else if (key == sf::Keyboard::Space)
-		mIsTurbo = isPressed;
+    //if not already moving
+    if(!mIsMoving){
+        if(key == sf::Keyboard::W)
+            mIsMovingUp = isPressed;
+        else if(key == sf::Keyboard::S)
+            mIsMovingDown = isPressed;
+        else if(key == sf::Keyboard::A)
+            mIsMovingLeft = isPressed;
+        else if(key == sf::Keyboard::D)
+            mIsMovingRight = isPressed;
+    }
+
+    if(isPressed && mTravelled >= mTileSize)
+        mTravelled = 0;
 
 }
 
@@ -76,7 +82,16 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 //perform movement for the player
 sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
+        //Stop moving if reached destination
+        if(mTravelled >= mTileSize){
 
+            mIsMovingDown = false;
+            mIsMovingUp = false;
+            mIsMovingRight = false;
+            mIsMovingLeft = false;
+            mIsMoving = false;
+            return sf::Vector2f(0,0);
+        }
 
 		//reset speed of movement and animation
 		float movementSpeed = mSpeed;
@@ -88,24 +103,19 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		/*
 		 * checking where to apply movement
 		 */
-		if(mIsTurbo){
-			movementSpeed = mSpeed * 5;
-			animatedPlayer.setFrameTime(sf::seconds(0.04));
-		}
-
 		if(mIsMovingDown){
 			totalMovement.y = movementSpeed;
 			currentAnimation = &walkingAnimationDown;
 			}
-		if(mIsMovingLeft){
+		else if(mIsMovingLeft){
 			totalMovement.x = -movementSpeed;
 			currentAnimation = &walkingAnimationLeft;
 			}
-		if(mIsMovingRight){
+		else if(mIsMovingRight){
 			totalMovement.x = movementSpeed;
 			currentAnimation = &walkingAnimationRight;
 		}
-		if(mIsMovingUp){
+		else if(mIsMovingUp){
 			totalMovement.y = -movementSpeed;
 			currentAnimation = &walkingAnimationUp;
 		}
@@ -119,16 +129,19 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 
 		animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
+
+
 		animatedPlayer.update(elapsedTime);
 
 		lastMovement = totalMovement *elapsedTime.asSeconds();
 
-	/*
-	 * TODO: Remove this when done testing
-	 */
-	std::cout << "X:" <<  this->animatedPlayer.getGlobalBounds().left << "\t" << "Y:" <<
-			this->animatedPlayer.getGlobalBounds().top <<
-			std::endl;
+        //One of these should be 0 and the other a value anyway, so can cheat a little and sum both
+        mTravelled += abs(
+                (int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
+
+
+        mIsMoving = (bool) mTravelled;
+
 
 		return totalMovement;
 }

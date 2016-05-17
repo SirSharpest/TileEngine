@@ -42,6 +42,7 @@ private:
 
 
 
+
 private:
 	sf::RenderWindow g_Window;
 

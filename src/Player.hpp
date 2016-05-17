@@ -29,7 +29,7 @@ public:
 private:
 
 	//properties of the player
-	float mSpeed;
+	float mSpeed, mTileSize, mTravelled;
 	sf::Vector2f movement;
 	sf::Vector2f mSize;
 	sf::Color mColor;

@@ -136,9 +136,12 @@ void Game::processEvents(){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
 
+                /*
+                 * TODO: Think of a solution for this? Is it needed and how can we have a boolean to switch it
 				if(event.type == sf::Event::KeyReleased){
                     g_player.handlePlayerInput(event.key.code, false);
 				}
+                */
 
 			}
 
@@ -251,7 +254,6 @@ void Game::setUpMap() {
 
     std::vector<int> myVec;
 
-    //12*9
     for(int i = 0; i < 10; i++){
 
         for(int j = 0; j < 10; j++){
@@ -260,11 +262,15 @@ void Game::setUpMap() {
 
     }
 
-    //3x3
+    //10x10
     g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
 
 
 }
+
+
+
+
 
 
 
