@@ -132,10 +132,11 @@ void Game::processEvents(){
 
                 /*
                  * TODO: Think of a solution for this? Is it needed and how can we have a boolean to switch it
-				if(event.type == sf::Event::KeyReleased){
+				*/
+                 if(event.type == sf::Event::KeyReleased){
                     g_player.handlePlayerInput(event.key.code, false);
 				}
-                */
+
 
 			}
 

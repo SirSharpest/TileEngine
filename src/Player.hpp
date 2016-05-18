@@ -51,6 +51,7 @@ private:
 	AnimatedSprite animatedPlayer;
 
 	sf::Vector2f lastMovement;
+	sf::Vector2f mGridPos;
 
 };
 

@@ -30,7 +30,8 @@ Player::Player():
         walkingAnimationRight(),
         walkingAnimationUp(),
         currentAnimation(&walkingAnimationRight),
-		lastMovement(0,0){
+		lastMovement(0,0),
+		mGridPos(0,0){
 
 
 
@@ -70,16 +71,21 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 	}
 
 
+	//TODO: Movement is halting for a cycle when being held, fix plz
     //if not already moving
-    if(!mIsMoving){
-        if(key == sf::Keyboard::W)
-            mIsMovingUp = isPressed;
-        else if(key == sf::Keyboard::S)
+    if(!mIsMoving || !isPressed){
+        if(key == sf::Keyboard::W){
+			mIsMovingUp = isPressed;
+			if(isPressed) mGridPos.y -= 1; }
+        else if(key == sf::Keyboard::S){
             mIsMovingDown = isPressed;
-        else if(key == sf::Keyboard::A)
+			if(isPressed) mGridPos.y += 1;}
+        else if(key == sf::Keyboard::A){
             mIsMovingLeft = isPressed;
-        else if(key == sf::Keyboard::D)
+			if(isPressed) mGridPos.x -= 1;}
+        else if(key == sf::Keyboard::D){
             mIsMovingRight = isPressed;
+			if(isPressed) mGridPos.x += 1;}
     }
 
 }
@@ -88,69 +94,79 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 //perform movement for the player
 sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
-        //Stop moving if reached destination
-        if(mTravelled >= mTileSize){
-            mIsMovingDown = false;
-            mIsMovingUp = false;
-            mIsMovingRight = false;
-            mIsMovingLeft = false;
-            mIsMoving = false;
-            return sf::Vector2f(0,0);
-        }
 
-		//reset speed of movement and animation
-		float movementSpeed = mSpeed;
+	//reset speed of movement and animation
+	float movementSpeed = mSpeed;
 
-		//To return and to move
-		sf::Vector2f totalMovement(0,0);
+	//To return and to move
+	sf::Vector2f totalMovement(0,0);
 
-		/*
-		 * checking where to apply movement
-		 */
-		if(mIsMovingDown){
-			totalMovement.y = movementSpeed;
-			currentAnimation = &walkingAnimationDown;
-			mIsMoving = true;
-			}
-		else if(mIsMovingLeft){
-			totalMovement.x = -movementSpeed;
-			currentAnimation = &walkingAnimationLeft;
-			mIsMoving = true;
-			}
-		else if(mIsMovingRight){
-			totalMovement.x = movementSpeed;
-			currentAnimation = &walkingAnimationRight;
-			mIsMoving = true;
+	/*
+	 * checking where to apply movement
+	 */
+	if(mIsMovingDown){
+		totalMovement.y = movementSpeed;
+		currentAnimation = &walkingAnimationDown;
+		mIsMoving = true;
 		}
-		else if(mIsMovingUp){
-			totalMovement.y = -movementSpeed;
-			currentAnimation = &walkingAnimationUp;
-			mIsMoving = true;
-		}else{
-			mIsMoving = false;
+	else if(mIsMovingLeft){
+		totalMovement.x = -movementSpeed;
+		currentAnimation = &walkingAnimationLeft;
+		mIsMoving = true;
 		}
+	else if(mIsMovingRight){
+		totalMovement.x = movementSpeed;
+		currentAnimation = &walkingAnimationRight;
+		mIsMoving = true;
+	}
+	else if(mIsMovingUp){
+		totalMovement.y = -movementSpeed;
+		currentAnimation = &walkingAnimationUp;
+		mIsMoving = true;
+	}else{
+		mIsMoving = false;
+	}
 
 
-		animatedPlayer.play(*currentAnimation);
+	animatedPlayer.play(*currentAnimation);
 
-		if(totalMovement.x == 0 && totalMovement.y == 0){
-			animatedPlayer.pause();
-		}
-
-
-		animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
+	if(totalMovement.x == 0 && totalMovement.y == 0){
+		animatedPlayer.pause();
+	}
 
 
-		animatedPlayer.update(elapsedTime);
+	animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
 
-		lastMovement = totalMovement *elapsedTime.asSeconds();
+	animatedPlayer.update(elapsedTime);
 
-        //One of these should be 0 and the other a value anyway, so can cheat a little and sum both
-        mTravelled += abs(
-                (int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
+	lastMovement = totalMovement *elapsedTime.asSeconds();
+
+	//One of these should be 0 and the other a value anyway, so can cheat a little and sum both
+	mTravelled += abs(
+			(int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
 
 
-		return totalMovement;
+
+	//Correct movement if past destination
+	//And turn movement off.
+	if(mTravelled >= mTileSize){
+
+		animatedPlayer.setPosition(mGridPos.x * 64, mGridPos.y * 64);
+
+		//For debugging print out position on maps
+		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
+		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
+//
+//		mIsMovingDown = false;
+//		mIsMovingUp = false;
+//		mIsMovingRight = false;
+//		mIsMovingLeft = false;
+//		mIsMoving = false;
+
+	}
+
+
+	return totalMovement;
 }
 
 void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
