@@ -65,9 +65,8 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
 
 	//Needed to reset distance traveled
-	if(isPressed && mTravelled >= mTileSize){
+	if(isPressed && !mIsMoving){
 		mTravelled = 0;
-		mIsMoving = false;
 	}
 
 
@@ -156,12 +155,12 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 		//For debugging print out position on maps
 		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
 		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
-//
-//		mIsMovingDown = false;
-//		mIsMovingUp = false;
-//		mIsMovingRight = false;
-//		mIsMovingLeft = false;
-//		mIsMoving = false;
+
+		mIsMovingDown = false;
+		mIsMovingUp = false;
+		mIsMovingRight = false;
+		mIsMovingLeft = false;
+		mIsMoving = false;
 
 	}
 
@@ -195,7 +194,7 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 	}
 	walkingAnimationDown.setSpriteSheet(texture);
 
-	animatedPlayer.setFrameTime(sf::seconds(0.1));
+	animatedPlayer.setFrameTime(sf::seconds(100.1));
 
 
 }
