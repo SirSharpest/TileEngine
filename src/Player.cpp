@@ -63,6 +63,8 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
 
+	//TODO: Think! When key is pressed user must be moving!
+	//TODO: Implement some kind of movement Queue that is size of 1
 
 	//Needed to reset distance traveled
 	if(isPressed && !mIsMoving){
@@ -94,8 +96,7 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 
-	//reset speed of movement and animation
-	float movementSpeed = mSpeed;
+
 
 	//To return and to move
 	sf::Vector2f totalMovement(0,0);
@@ -104,22 +105,22 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 	 * checking where to apply movement
 	 */
 	if(mIsMovingDown){
-		totalMovement.y = movementSpeed;
+		totalMovement.y = mSpeed;
 		currentAnimation = &walkingAnimationDown;
 		mIsMoving = true;
 		}
 	else if(mIsMovingLeft){
-		totalMovement.x = -movementSpeed;
+		totalMovement.x = -mSpeed;
 		currentAnimation = &walkingAnimationLeft;
 		mIsMoving = true;
 		}
 	else if(mIsMovingRight){
-		totalMovement.x = movementSpeed;
+		totalMovement.x = mSpeed;
 		currentAnimation = &walkingAnimationRight;
 		mIsMoving = true;
 	}
 	else if(mIsMovingUp){
-		totalMovement.y = -movementSpeed;
+		totalMovement.y = -mSpeed;
 		currentAnimation = &walkingAnimationUp;
 		mIsMoving = true;
 	}else{
@@ -148,7 +149,11 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 	//Correct movement if past destination
 	//And turn movement off.
-	if(mTravelled >= mTileSize){
+	if(mTravelled >= mTileSize && mIsMoving){
+
+		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
+		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
+
 
 		animatedPlayer.setPosition(mGridPos.x * 64, mGridPos.y * 64);
 

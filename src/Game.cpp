@@ -131,8 +131,6 @@ void Game::processEvents(){
 				}
 
 
-
-
 			}
 
 		}
