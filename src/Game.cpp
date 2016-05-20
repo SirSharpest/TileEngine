@@ -28,18 +28,17 @@ g_BackgroundSprite(),
 g_BackgroundTexture(),
 g_Map(),
 g_player(),
-g_pokeballTexture(),
-g_pokeball(),
 g_scoreText(),
 g_score(0)
 {
 	//setting window properties
-	g_Window.setVerticalSyncEnabled(false);
+	g_Window.setVerticalSyncEnabled(true);
 	g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
 
 
 	//setting font location
 	g_AlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
+
 	//loading splash screen
 	g_SplashScreenTexture.loadFromFile("images/intro.png");
 	g_SplashScreenSprite.setTexture(g_SplashScreenTexture);
@@ -61,11 +60,7 @@ g_score(0)
     setUpMap();
 	setUpPlayerMovements();
 
-	//Load sprites
-	g_pokeballTexture.loadFromFile("images/Pokeball.png");
-	g_pokeball.setup(g_pokeballTexture);
-	g_pokeball.setPosition(250,250);
-	g_pokeball.setScale(0.2,0.2);
+
 
 	/* initialize random seed: */
 	srand ((unsigned int) time(NULL));
@@ -85,8 +80,7 @@ void Game::run(){
 
 			//main loop to run the entire length of games
 			//life
-	        while (g_Window.isOpen())
-	        {
+	        while (g_Window.isOpen()) {
 	            sf::Time dt = clock.restart();
 	            timeSinceLastUpdate += dt;
 
@@ -96,11 +90,9 @@ void Game::run(){
 	            	timeSinceLastUpdate -= TIME_PER_FRAME;
 	                processEvents();
 	                update(dt);
-
 	            }
 	            updateFPSCounter(dt);
 	            render();
-
 	        }
 }
 
@@ -124,20 +116,18 @@ void Game::processEvents(){
 				}
 			}
 
-			if(g_GameState == PLAYING){
-				if(event.type == sf::Event::KeyPressed){
+
+            if(g_GameState == PLAYING){
+
+				//Handle a key being pressed
+                if(event.type == sf::Event::KeyPressed){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
 
-				if(event.type == sf::Event::KeyReleased){
-					//handle input
-                    g_player.handlePlayerInput(event.key.code, false);
-				}
 
 			}
 
 		}
-
 
 }
 
@@ -155,39 +145,11 @@ void Game::update(sf::Time elapsedTime){
 //Put all the collision checking and handling here
 void Game::handleCollisions(){
 
-    //Ensure that player is always within this rect?
-	//For a 640,640 map and a 64x64 player this should keep within bounds
-    sf::FloatRect bounds (60,60, 640-124, 640-124 );
+		/*
+		 * TODO: Add some
+		 */
 
-    if(g_GameState == PLAYING) {
-        if (!g_player.getAnimatedPlayer().getGlobalBounds().intersects(bounds)) {
-            g_player.reverseLastMove();
-        }
-
-
-		if(g_player.getAnimatedPlayer().getGlobalBounds().intersects(g_pokeball.getGlobalBounds())){
-
-			/* generate secret number between 1 and 10: */
-			int x = rand() % 620 + 10;
-			int y = rand() % 620 + 10;
-
-			g_pokeball.setPosition(x,y);
-
-			g_score++;
-
-			std::ostringstream convert;   // stream used for the conversion
-
-			convert << g_score;      // insert the textual representation of 'Number' in the characters in the stream
-
-			g_scoreText.setString(convert.str()); // set 'Result' to the contents of the stream
-
-
-		}
     }
-
-}
-
-
 
 
 void Game::updateFPSCounter(sf::Time dt){
@@ -222,8 +184,6 @@ void Game::render(){
 		case PLAYING:
 			g_Window.draw(g_Map);
 			g_Window.draw(g_player.getAnimatedPlayer());
-			g_Window.draw(g_pokeball);
-			g_Window.draw(g_scoreText);
 			break;
 		default:
 			break;
@@ -274,7 +234,6 @@ void Game::setUpMap() {
 
     std::vector<int> myVec;
 
-    //12*9
     for(int i = 0; i < 10; i++){
 
         for(int j = 0; j < 10; j++){
@@ -283,11 +242,15 @@ void Game::setUpMap() {
 
     }
 
-    //3x3
+    //10x10
     g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
 
 
 }
+
+
+
+
 
 
 

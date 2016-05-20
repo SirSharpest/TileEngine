@@ -42,6 +42,7 @@ private:
 
 
 
+
 private:
 	sf::RenderWindow g_Window;
 
@@ -67,10 +68,6 @@ private:
 
 	tileMap g_Map;
 	Player g_player;
-
-	sf::Texture g_pokeballTexture;
-
-	Pickups g_pokeball;
 
 	sf::Text g_scoreText;
 	u_int g_score;

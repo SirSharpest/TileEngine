@@ -4,18 +4,19 @@
  *  Created on: 2 Apr 2015
  *      Author: nathan
  *
- *  Currently loads a wizard sprite
+ *  Currently loads a  sprite
  *
  */
 
+#include <iostream>
 #include "Player.hpp"
 
 Player::Player():
-        mSpeed(200.f),
+        mSpeed(300.f),
+        mTileSize(64.f),
+        mTravelled(0),
         movement(0.f, 0.f),
         mSize(1,1),
-        mPosX(0),
-        mPosY(0),
         mColor(sf::Color::Blue),
         mIsMovingUp(false),
         mIsMovingDown(false),
@@ -29,7 +30,8 @@ Player::Player():
         walkingAnimationRight(),
         walkingAnimationUp(),
         currentAnimation(&walkingAnimationRight),
-		lastMovement(0,0){
+		lastMovement(0,0),
+		mGridPos(0,0){
 
 
 
@@ -50,7 +52,8 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 	//Increasing the size of the image
     animatedPlayer.setScale(mSize);
 	//animated sprite properties
-	animatedPlayer.setPosition(mPosX, mPosY);
+	//default values for now
+	animatedPlayer.setPosition(0, 0);
 
 
 
@@ -60,18 +63,31 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
 
-	if(key == sf::Keyboard::W)
-		mIsMovingUp = isPressed;
-	else if(key == sf::Keyboard::S)
-		mIsMovingDown = isPressed;
-	else if(key == sf::Keyboard::A)
-		mIsMovingLeft = isPressed;
-	else if(key == sf::Keyboard::D)
-		mIsMovingRight = isPressed;
-	else if (key == sf::Keyboard::Space)
-		mIsTurbo = isPressed;
+	//TODO: Think! When key is pressed user must be moving!
+	//TODO: Implement some kind of movement Queue that is size of 1
+
+	//Needed to reset distance traveled
+	if(isPressed && !mIsMoving){
+		mTravelled = 0;
+	}
 
 
+	//TODO: Movement is halting for a cycle when being held, fix plz
+    //if not already moving
+    if(!mIsMoving || !isPressed){
+        if(key == sf::Keyboard::W){
+			mIsMovingUp = isPressed;
+			if(isPressed) mGridPos.y -= 1; }
+        else if(key == sf::Keyboard::S){
+            mIsMovingDown = isPressed;
+			if(isPressed) mGridPos.y += 1;}
+        else if(key == sf::Keyboard::A){
+            mIsMovingLeft = isPressed;
+			if(isPressed) mGridPos.x -= 1;}
+        else if(key == sf::Keyboard::D){
+            mIsMovingRight = isPressed;
+			if(isPressed) mGridPos.x += 1;}
+    }
 
 }
 
@@ -81,56 +97,84 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 
 
-		//reset speed of movement and animation
-		float movementSpeed = mSpeed;
-		animatedPlayer.setFrameTime(sf::seconds(0.2));
 
-		//To return and to move
-		sf::Vector2f totalMovement(0,0);
+	//To return and to move
+	sf::Vector2f totalMovement(0,0);
 
-		/*
-		 * checking where to apply movement
-		 */
-		if(mIsTurbo){
-			movementSpeed = mSpeed * 5;
-			animatedPlayer.setFrameTime(sf::seconds(0.04));
+	/*
+	 * checking where to apply movement
+	 */
+	if(mIsMovingDown){
+		totalMovement.y = mSpeed;
+		currentAnimation = &walkingAnimationDown;
+		mIsMoving = true;
 		}
-
-
-
-		if(mIsMovingDown){
-			totalMovement.y = movementSpeed;
-			currentAnimation = &walkingAnimationDown;
-			}
-		if(mIsMovingLeft){
-			totalMovement.x = -movementSpeed;
-			currentAnimation = &walkingAnimationLeft;
-			}
-		if(mIsMovingRight){
-			totalMovement.x = movementSpeed;
-			currentAnimation = &walkingAnimationRight;
+	else if(mIsMovingLeft){
+		totalMovement.x = -mSpeed;
+		currentAnimation = &walkingAnimationLeft;
+		mIsMoving = true;
 		}
-		if(mIsMovingUp){
-			totalMovement.y = -movementSpeed;
-			currentAnimation = &walkingAnimationUp;
-		}
+	else if(mIsMovingRight){
+		totalMovement.x = mSpeed;
+		currentAnimation = &walkingAnimationRight;
+		mIsMoving = true;
+	}
+	else if(mIsMovingUp){
+		totalMovement.y = -mSpeed;
+		currentAnimation = &walkingAnimationUp;
+		mIsMoving = true;
+	}else{
+		mIsMoving = false;
+	}
 
 
-		animatedPlayer.play(*currentAnimation);
+	animatedPlayer.play(*currentAnimation);
 
-		if(totalMovement.x == 0 && totalMovement.y == 0){
-			animatedPlayer.pause();
-		}
+	if(totalMovement.x == 0 && totalMovement.y == 0){
+		animatedPlayer.pause();
+	}
 
 
-		animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
-		animatedPlayer.update(elapsedTime);
+	animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
 
-		lastMovement = totalMovement *elapsedTime.asSeconds();
-		return totalMovement;
+	animatedPlayer.update(elapsedTime);
+
+	lastMovement = totalMovement *elapsedTime.asSeconds();
+
+	//One of these should be 0 and the other a value anyway, so can cheat a little and sum both
+	mTravelled += abs(
+			(int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
+
+
+
+	//Correct movement if past destination
+	//And turn movement off.
+	if(mTravelled >= mTileSize && mIsMoving){
+
+		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
+		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
+
+
+		animatedPlayer.setPosition(mGridPos.x * 64, mGridPos.y * 64);
+
+		//For debugging print out position on maps
+		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
+		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
+
+		mIsMovingDown = false;
+		mIsMovingUp = false;
+		mIsMovingRight = false;
+		mIsMovingLeft = false;
+		mIsMoving = false;
+
+	}
+
+
+	return totalMovement;
 }
 
-void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements, std::vector<sf::Vector2f> rightMovements,
+void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
+							std::vector<sf::Vector2f> rightMovements,
 							std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements){
 
 
@@ -155,6 +199,8 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 	}
 	walkingAnimationDown.setSpriteSheet(texture);
 
+	animatedPlayer.setFrameTime(sf::seconds(0.1));
+
 
 }
 
@@ -173,3 +219,10 @@ void Player::reverseLastMove() {
 	animatedPlayer.move(lastMovement.x *-1, lastMovement.y*-1);
 
 }
+
+
+
+
+
+
+
