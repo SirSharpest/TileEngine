@@ -119,13 +119,7 @@ void Game::processEvents(){
 
             if(g_GameState == PLAYING){
 
-                /*
-                 * TODO: When a key is pressed the user should advance one tile in that direction
-                 * TODO: When a key is held, this should continue moving in a linear fashion
-                 * TODO: KeyReleased should also signal a kill to movement
-                 * TODO: Fix issue, movement won't still be handled if a gap between press and release
-                 */
-
+				//Handle a key being pressed
                 if(event.type == sf::Event::KeyPressed){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
@@ -152,7 +146,7 @@ void Game::update(sf::Time elapsedTime){
 void Game::handleCollisions(){
 
 		/*
-		 * TODO: ALL OF THIS!!!!!
+		 * TODO: Add some
 		 */
 
     }

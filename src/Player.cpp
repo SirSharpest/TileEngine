@@ -12,7 +12,7 @@
 #include "Player.hpp"
 
 Player::Player():
-        mSpeed(196.f),
+        mSpeed(300.f),
         mTileSize(64.f),
         mTravelled(0),
         movement(0.f, 0.f),
@@ -199,7 +199,7 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 	}
 	walkingAnimationDown.setSpriteSheet(texture);
 
-	animatedPlayer.setFrameTime(sf::seconds(100.1));
+	animatedPlayer.setFrameTime(sf::seconds(0.1));
 
 
 }
