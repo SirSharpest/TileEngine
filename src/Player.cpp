@@ -151,15 +151,7 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 	//And turn movement off.
 	if(mTravelled >= mTileSize && mIsMoving){
 
-		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
-		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
-
-
 		animatedPlayer.setPosition(mGridPos.x * 64, mGridPos.y * 64);
-
-		//For debugging print out position on maps
-		std::cout << this->getAnimatedPlayer().getGlobalBounds().left << "\t" <<
-		this->getAnimatedPlayer().getGlobalBounds().top << std::endl;
 
 		mIsMovingDown = false;
 		mIsMovingUp = false;
