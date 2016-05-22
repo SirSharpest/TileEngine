@@ -17,7 +17,7 @@ file(GLOB SRC
 )
 
 
-add_executable(${EXECUTABLE_NAME} ${SRC} src/tileMap.cpp src/tileMap.hpp src/Pickups.cpp src/Pickups.hpp)
+add_executable(${EXECUTABLE_NAME} ${SRC} src/tileMap.cpp src/tileMap.hpp src/Pickups.cpp src/Pickups.hpp src/NPC.cpp src/NPC.hpp src/Character.cpp src/Character.hpp)
 
 
 # Detect and add SFML

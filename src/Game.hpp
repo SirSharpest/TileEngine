@@ -30,13 +30,6 @@ private:
 	void processEvents();
 	void handleCollisions();
 	void updateFPSCounter(sf::Time dt);
-
-	/*
-	 *
-	 * TODO: Mayhaps make these functions more flexible, have them take perams
-	 * TODO: make checks to data entered and construct levels and players dynamically
-	 *
-	 */
 	void setUpMap();
 	void setUpPlayerMovements();
 
