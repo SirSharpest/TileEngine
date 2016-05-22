@@ -13,18 +13,20 @@
 
 class Player {
 public:
-	Player();
+	Player(sf::Vector2f gridSize, float tileSize);
 	void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
 			   std::vector<sf::Vector2f> rightMovements,
 			   std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
 	virtual ~Player();
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-	sf::Vector2f updatePlayer(sf::Time elapsedTime);
+	void updatePlayer(sf::Time elapsedTime);
 	void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
 						std::vector<sf::Vector2f> rightMovements,
 						std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
 	AnimatedSprite getAnimatedPlayer();
-	void reverseLastMove();
+
+    sf::Vector2f* getPosition();
+
 
 private:
 
@@ -50,8 +52,11 @@ private:
 
 	AnimatedSprite animatedPlayer;
 
-	sf::Vector2f lastMovement;
 	sf::Vector2f mGridPos;
+
+    sf::Vector2f mGridSize;
+
+
 
 };
 

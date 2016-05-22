@@ -8,12 +8,11 @@
  *
  */
 
-#include <iostream>
 #include "Player.hpp"
 
-Player::Player():
+Player::Player(sf::Vector2f gridSize, float tileSize):
         mSpeed(300.f),
-        mTileSize(64.f),
+        mTileSize(tileSize),
         mTravelled(0),
         movement(0.f, 0.f),
         mSize(1,1),
@@ -30,8 +29,8 @@ Player::Player():
         walkingAnimationRight(),
         walkingAnimationUp(),
         currentAnimation(&walkingAnimationRight),
-		lastMovement(0,0),
-		mGridPos(0,0){
+		mGridPos(0,0),
+        mGridSize(gridSize){
 
 
 
@@ -62,40 +61,41 @@ void Player::setUp(std::string fileLocation, int h, int w, std::vector<sf::Vecto
 //is given the key that has been pressed and handles the input for it
 void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed){
 
-
-	//TODO: Think! When key is pressed user must be moving!
-	//TODO: Implement some kind of movement Queue that is size of 1
-
 	//Needed to reset distance traveled
 	if(isPressed && !mIsMoving){
 		mTravelled = 0;
 	}
 
 
-	//TODO: Movement is halting for a cycle when being held, fix plz
     //if not already moving
     if(!mIsMoving || !isPressed){
         if(key == sf::Keyboard::W){
-			mIsMovingUp = isPressed;
-			if(isPressed) mGridPos.y -= 1; }
+            if(mGridPos.y-1 >= 0){
+                mIsMovingUp = isPressed;
+                if(isPressed) mGridPos.y -= 1;}
+			}
         else if(key == sf::Keyboard::S){
-            mIsMovingDown = isPressed;
-			if(isPressed) mGridPos.y += 1;}
+            if(mGridPos.y+1 < mGridSize.y){
+                mIsMovingDown = isPressed;
+                if(isPressed) mGridPos.y += 1;}
+            }
         else if(key == sf::Keyboard::A){
-            mIsMovingLeft = isPressed;
+            if(mGridPos.x-1 >= 0){
+                mIsMovingLeft = isPressed;
 			if(isPressed) mGridPos.x -= 1;}
+        }
         else if(key == sf::Keyboard::D){
-            mIsMovingRight = isPressed;
-			if(isPressed) mGridPos.x += 1;}
+            if(mGridPos.x+1 < mGridSize.x) {
+                mIsMovingRight = isPressed;
+                if (isPressed) mGridPos.x += 1;}
+        }
     }
 
 }
 
 
 //perform movement for the player
-sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
-
-
+void Player::updatePlayer(sf::Time elapsedTime) {
 
 
 	//To return and to move
@@ -139,8 +139,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 
 	animatedPlayer.update(elapsedTime);
 
-	lastMovement = totalMovement *elapsedTime.asSeconds();
-
 	//One of these should be 0 and the other a value anyway, so can cheat a little and sum both
 	mTravelled += abs(
 			(int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
@@ -162,7 +160,6 @@ sf::Vector2f Player::updatePlayer(sf::Time elapsedTime) {
 	}
 
 
-	return totalMovement;
 }
 
 void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
@@ -196,6 +193,7 @@ void Player::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::
 
 }
 
+//Gets the player sprite so that it can be drawn
 AnimatedSprite Player::getAnimatedPlayer(){
 
 	return animatedPlayer;
@@ -206,11 +204,13 @@ AnimatedSprite Player::getAnimatedPlayer(){
 Player::~Player() {
 }
 
-void Player::reverseLastMove() {
-
-	animatedPlayer.move(lastMovement.x *-1, lastMovement.y*-1);
-
+//Gets the position of the player on a grid
+sf::Vector2f *Player::getPosition() {
+	return &mGridPos;
 }
+
+
+
 
 
 

@@ -27,7 +27,7 @@ g_SplashScreenSprite(),
 g_BackgroundSprite(),
 g_BackgroundTexture(),
 g_Map(),
-g_player(),
+g_player(sf::Vector2f(10,10), 64.f),
 g_scoreText(),
 g_score(0)
 {
@@ -59,7 +59,6 @@ g_score(0)
 	//Set up some of the finner details of the game
     setUpMap();
 	setUpPlayerMovements();
-
 
 
 	/* initialize random seed: */
