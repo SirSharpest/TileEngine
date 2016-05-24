@@ -37,10 +37,10 @@ void Character::setUp(std::string fileLocation, int h, int w, std::vector<sf::Ve
     setupAnimation(characterSprite, h ,w , leftMovements, rightMovements, upMovements, downMovements);
 
     //Increasing the size of the image
-    animatedPlayer.setScale(mSize);
+    this->setScale(mSize);
     //animated sprite properties
     //default values for now
-    animatedPlayer.setPosition(0, 0);
+    this->setPosition(0, 0);
 
 }
 
@@ -78,16 +78,16 @@ void Character::updateCharacter(sf::Time elapsedTime) {
     }
 
 
-    animatedPlayer.play(*currentAnimation);
+    this->play(*currentAnimation);
 
     if(totalMovement.x == 0 && totalMovement.y == 0){
-        animatedPlayer.pause();
+        this->pause();
     }
 
 
-    animatedPlayer.move(totalMovement  * elapsedTime.asSeconds());
+    this->move(totalMovement  * elapsedTime.asSeconds());
 
-    animatedPlayer.update(elapsedTime);
+    this->update(elapsedTime);
 
     //One of these should be 0 and the other a value anyway, so can cheat a little and sum both
     mTravelled += abs(
@@ -99,7 +99,7 @@ void Character::updateCharacter(sf::Time elapsedTime) {
     //And turn movement off.
     if(mTravelled >= mTileSize && mIsMoving){
 
-        animatedPlayer.setPosition(mGridPos.x * 64, mGridPos.y * 64);
+        this->setPosition(mGridPos.x * 64, mGridPos.y * 64);
 
         mIsMovingDown = false;
         mIsMovingUp = false;
@@ -142,7 +142,7 @@ void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<s
     }
     walkingAnimationDown.setSpriteSheet(texture);
 
-    animatedPlayer.setFrameTime(sf::seconds(0.1));
+    this->setFrameTime(sf::seconds(0.1));
 
 
 
@@ -150,9 +150,6 @@ void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<s
 
 }
 
-AnimatedSprite Character::getAnimatedPlayer() {
-    return animatedPlayer;
-}
 
 sf::Vector2f *Character::getPosition() {
     return &mGridPos;

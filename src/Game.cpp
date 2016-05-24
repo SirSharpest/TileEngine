@@ -180,7 +180,7 @@ void Game::render(){
 			break;
 		case PLAYING:
 			g_Window.draw(g_Map);
-			g_Window.draw(g_player.getAnimatedPlayer());
+			g_Window.draw(g_player);
 			break;
 		default:
 			break;

@@ -10,7 +10,7 @@
 
 
 
-class Character {
+class Character : public AnimatedSprite{
 
 public:
 
@@ -22,7 +22,6 @@ public:
     void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
                         std::vector<sf::Vector2f> rightMovements,
                         std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
-    AnimatedSprite getAnimatedPlayer();
 
     sf::Vector2f* getPosition();
 
@@ -45,8 +44,6 @@ protected:
             walkingAnimationRight, walkingAnimationUp;
 
     Animation* currentAnimation;
-
-    AnimatedSprite animatedPlayer;
 
     sf::Vector2f mGridPos;
 

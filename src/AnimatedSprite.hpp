@@ -64,6 +64,13 @@ private:
     const sf::Texture* m_texture;
     sf::Vertex m_vertices[4];
 
+
+    /*
+     *
+     * Modifications made by Nathan Hughes
+     *
+     */
+protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };
