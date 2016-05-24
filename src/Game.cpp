@@ -133,7 +133,7 @@ void Game::update(sf::Time elapsedTime){
 
 
 	handleCollisions();
-    g_player.updatePlayer(elapsedTime);
+	g_player.updateCharacter(elapsedTime);
 
 
 }

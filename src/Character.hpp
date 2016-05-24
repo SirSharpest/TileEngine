@@ -15,10 +15,10 @@ class Character {
 public:
 
     Character(sf::Vector2f gridSize, float tileSize);
-    void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
+    virtual void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
                std::vector<sf::Vector2f> rightMovements,
                std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
-    void updateCharacter(sf::Time elapsedTime);
+    virtual void updateCharacter(sf::Time elapsedTime);
     void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
                         std::vector<sf::Vector2f> rightMovements,
                         std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
@@ -27,7 +27,7 @@ public:
     sf::Vector2f* getPosition();
 
 
-private:
+protected:
 
     //properties of the player
     float mSpeed, mTileSize, mTravelled;
