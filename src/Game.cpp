@@ -115,14 +115,12 @@ void Game::processEvents(){
 				}
 			}
 
-
             if(g_GameState == PLAYING){
 
 				//Handle a key being pressed
                 if(event.type == sf::Event::KeyPressed){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
-
 
 			}
 
@@ -135,7 +133,7 @@ void Game::update(sf::Time elapsedTime){
 
 
 	handleCollisions();
-    g_player.updatePlayer(elapsedTime);
+	g_player.updateCharacter(elapsedTime);
 
 
 }
