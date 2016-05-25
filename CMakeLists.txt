@@ -2,8 +2,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(SFML2)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14  -Wall -Wextra")
 
-include_directories("${PROJECT_BINARY_DIR} src/")
+
+include_directories("${PROJECT_BINARY_DIR} src/headers")
 include_directories("${YOUR_DIRECTORY} src")
 
 
@@ -17,7 +19,7 @@ file(GLOB SRC
 )
 
 
-add_executable(${EXECUTABLE_NAME} ${SRC} src/tileMap.cpp src/tileMap.hpp src/Pickups.cpp src/Pickups.hpp src/NPC.cpp src/NPC.hpp src/Character.cpp src/Character.hpp)
+add_executable(${EXECUTABLE_NAME} ${SRC} src/tileMap.cpp src/headers/tileMap.hpp src/Pickups.cpp src/headers/Pickups.hpp src/NPC.cpp src/headers/NPC.hpp src/Character.cpp src/headers/Character.hpp src/SoundManager.cpp src/headers/SoundManager.hpp)
 
 
 # Detect and add SFML

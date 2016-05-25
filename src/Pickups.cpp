@@ -2,7 +2,7 @@
 // Created by nathan on 29/04/16.
 //
 
-#include "Pickups.hpp"
+#include "headers/Pickups.hpp"
 
 Pickups::Pickups(){
 }

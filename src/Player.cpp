@@ -8,7 +8,7 @@
  *
  */
 
-#include "Player.hpp"
+#include "headers/Player.hpp"
 
 
 Player::Player(sf::Vector2f gridSize, float tileSize) : Character(gridSize, tileSize) { Character(gridSize, tileSize);}
