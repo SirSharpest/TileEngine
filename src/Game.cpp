@@ -8,13 +8,14 @@
 
 
 
-#include "Game.hpp"
+#include "headers/Game.hpp"
 #include <iostream>
 #include <sstream>
 
 
 Game::Game():
 g_Window(sf::VideoMode(640, 640), "SFML"),
+g_Sounds(),
 g_AlexandriaFont(),
 FRAMES_PER_SECOND(60),
 TIME_PER_FRAME(sf::seconds(1.f/FRAMES_PER_SECOND)),
@@ -60,6 +61,9 @@ g_score(0)
     setUpMap();
 	setUpPlayerMovements();
 
+    //Perform some sound loading
+    //TODO formalize and make nice to work with
+    g_Sounds.addTrack("music/starterTheme.wav");
 
 	/* initialize random seed: */
 	srand ((unsigned int) time(NULL));
@@ -68,6 +72,7 @@ g_score(0)
 
 
 void Game::run(){
+
 
 
 	//clocks and times used to get custom game loop working
@@ -91,6 +96,7 @@ void Game::run(){
 	                update(dt);
 	            }
 	            updateFPSCounter(dt);
+                playSounds();
 	            render();
 	        }
 }
@@ -191,6 +197,19 @@ void Game::render(){
 	g_Window.display();
 
 
+}
+
+
+void Game::playSounds() {
+    switch (g_GameState){
+
+        case PLAYING:
+            g_Sounds.playBackgroundMusic();
+            break;
+        default:
+            break;
+
+    }
 }
 
 void Game::setUpPlayerMovements() {

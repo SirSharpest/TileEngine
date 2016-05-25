@@ -2,28 +2,28 @@
 // Created by nathan on 22/05/16.
 //
 
-#include "Character.hpp"
+#include "headers/Character.hpp"
 
 Character::Character(sf::Vector2f gridSize, float tileSize):
-        mSpeed(300.f),
-        mTileSize(tileSize),
-        mTravelled(0),
-        movement(0.f, 0.f),
-        mSize(1,1),
-        mIsMovingUp(false),
-        mIsMovingDown(false),
-        mIsMovingLeft(false),
-        mIsMovingRight(false),
-        mIsTurbo(false),
-        mIsMoving(false),
-        characterSprite(),
-        walkingAnimationDown(),
-        walkingAnimationLeft(),
-        walkingAnimationRight(),
-        walkingAnimationUp(),
-        currentAnimation(&walkingAnimationRight),
-        mGridPos(0,0),
-        mGridSize(gridSize){
+mSpeed(300.f),
+mTileSize(tileSize),
+mTravelled(0),
+movement(0.f, 0.f),
+mSize(1,1),
+mIsMovingUp(false),
+mIsMovingDown(false),
+mIsMovingLeft(false),
+mIsMovingRight(false),
+mIsTurbo(false),
+mIsMoving(false),
+characterSprite(),
+walkingAnimationDown(),
+walkingAnimationLeft(),
+walkingAnimationRight(),
+walkingAnimationUp(),
+currentAnimation(&walkingAnimationRight),
+mGridPos(0,0),
+mGridSize(gridSize){
 
 }
 
@@ -110,16 +110,11 @@ void Character::updateCharacter(sf::Time elapsedTime) {
     }
 
 
-
-
-
 }
 
 void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
                                std::vector<sf::Vector2f> rightMovements, std::vector<sf::Vector2f> upMovements,
                                std::vector<sf::Vector2f> downMovements) {
-
-
 
 
     for(int i = 0; i < leftMovements.size(); i++){
@@ -143,10 +138,6 @@ void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<s
     walkingAnimationDown.setSpriteSheet(texture);
 
     this->setFrameTime(sf::seconds(0.1));
-
-
-
-
 
 }
 
