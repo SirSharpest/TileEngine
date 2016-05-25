@@ -9,21 +9,32 @@
 
 void SoundManager::addTrack(std::string fileLocation) {
 
+
+    //first check if track exists
+    for(std::map<std::string, std::unique_ptr<sf::Music>>::const_iterator it =
+            mCollection.begin(); it!=mCollection.end(); it++){
+
+        if(fileLocation == it->first){
+            std::cout << "File already exists in memory" << std::endl;
+            //Could return here if getting
+            break;
+        }
+    }
+
+    //If still going then we know it hasn't been found
+    //and can happily make it.
     auto ptr = std::make_unique<sf::Music>();
 
     if(ptr->openFromFile(fileLocation))
-        mCollection.push_back(std::move(ptr));
-    else
-        std::cout << "Error loading music file: " << fileLocation;
-
+        mCollection[fileLocation] = std::move(ptr);
 }
 
 
 void SoundManager::playBackgroundMusic() {
 
     if(!isPlaying){
-        mCollection[0]->setVolume(100);
-        mCollection[0]->play();
+        mCollection["music/background01.wav"]->play();
+        mCollection["music/background01.wav"]->setVolume(100);
         isPlaying = true;
     }
 

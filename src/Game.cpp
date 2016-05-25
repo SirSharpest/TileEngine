@@ -63,7 +63,7 @@ g_score(0)
 
     //Perform some sound loading
     //TODO formalize and make nice to work with
-    g_Sounds.addTrack("music/starterTheme.wav");
+    g_Sounds.addTrack("music/background01.wav");
 
 	/* initialize random seed: */
 	srand ((unsigned int) time(NULL));

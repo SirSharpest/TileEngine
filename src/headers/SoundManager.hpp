@@ -7,6 +7,7 @@
 
 #include <SFML/Audio.hpp>
 #include <algorithm>
+#include <map>
 
 
 class SoundManager {
@@ -31,7 +32,11 @@ private:
 
 
     //Collection of music loaded currently in memory
-    std::vector<std::unique_ptr<sf::Music>> mCollection;
+    //std::vector<std::unique_ptr<sf::Music>> mCollection;
+
+    std::map<std::string, std::unique_ptr<sf::Music>> mCollection;
+
+
     bool isPlaying;
 };
 
