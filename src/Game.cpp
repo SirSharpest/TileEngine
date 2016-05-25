@@ -123,7 +123,10 @@ void Game::processEvents(){
 
             if(g_GameState == PLAYING){
 
-				//Handle a key being pressed
+				if(event.key.code == sf::Keyboard::Escape)
+					g_GameState = INTRO;
+
+					//Handle a key being pressed
                 if(event.type == sf::Event::KeyPressed){
 	                g_player.handlePlayerInput(event.key.code, true);
 				}
@@ -203,6 +206,9 @@ void Game::render(){
 void Game::playSounds() {
     switch (g_GameState){
 
+        case INTRO:
+            g_Sounds.stopMusic();
+            break;
         case PLAYING:
             g_Sounds.playBackgroundMusic();
             break;
