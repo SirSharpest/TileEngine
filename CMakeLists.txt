@@ -14,13 +14,12 @@ include_directories("${YOUR_DIRECTORY} src")
 set(EXECUTABLE_NAME "SFML")
 
 file(GLOB SRC
-    "src/*.h"
+    "src/headers/*.hpp"
     "src/*.cpp"
 )
 
 
-add_executable(${EXECUTABLE_NAME} ${SRC} src/tileMap.cpp src/headers/tileMap.hpp src/Pickups.cpp src/headers/Pickups.hpp src/NPC.cpp src/headers/NPC.hpp src/Character.cpp src/headers/Character.hpp src/SoundManager.cpp src/headers/SoundManager.hpp)
-
+add_executable(${EXECUTABLE_NAME} ${SRC})
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
