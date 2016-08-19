@@ -15,20 +15,20 @@
 class Pickups : public sf::Sprite{
 
 private:
-    sf::Texture m_image;
-    sf::Vector2f m_position, m_size;
-    int m_posX, posY;
+  sf::Texture m_image;
+  sf::Vector2f m_position, m_size;
+  int m_posX, posY;
 
 
 public:
 
-    /**
-     * Setup the initial pickup
-     * Takes the XY location of an image file and then the size on the sprite sheet itself and loads it into memory
-     */
-    Pickups();
+  /**
+   * Setup the initial pickup
+   * Takes the XY location of an image file and then the size on the sprite sheet itself and loads it into memory
+   */
+  Pickups();
 
-    void setup(sf::Texture &image);
+  void setup(sf::Texture &image);
 
 
 

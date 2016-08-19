@@ -14,40 +14,40 @@ class Character : public AnimatedSprite{
 
 public:
 
-    Character(sf::Vector2f gridSize, float tileSize);
-    virtual void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
-               std::vector<sf::Vector2f> rightMovements,
-               std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
-    virtual void updateCharacter(sf::Time elapsedTime);
-    void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
-                        std::vector<sf::Vector2f> rightMovements,
-                        std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
+  Character(sf::Vector2f gridSize, float tileSize);
+  virtual void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
+                     std::vector<sf::Vector2f> rightMovements,
+                     std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
+  virtual void updateCharacter(sf::Time elapsedTime);
+  void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
+                      std::vector<sf::Vector2f> rightMovements,
+                      std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
 
-    sf::Vector2f* getPosition();
+  sf::Vector2f* getPosition();
 
 
 protected:
 
-    //properties of the player
-    float mSpeed, mTileSize, mTravelled;
-    sf::Vector2f movement;
-    sf::Vector2f mSize;
+  //properties of the player
+  float mSpeed, mTileSize, mTravelled;
+  sf::Vector2f movement;
+  sf::Vector2f mSize;
 
-    //movement flags
-    bool mIsMovingUp, mIsMovingDown,
-            mIsMovingLeft, mIsMovingRight,
-            mIsTurbo, mIsMoving;
+  //movement flags
+  bool mIsMovingUp, mIsMovingDown,
+    mIsMovingLeft, mIsMovingRight,
+    mIsTurbo, mIsMoving;
 
-    sf::Texture characterSprite;
+  sf::Texture characterSprite;
 
-    Animation walkingAnimationDown, walkingAnimationLeft,
-            walkingAnimationRight, walkingAnimationUp;
+  Animation walkingAnimationDown, walkingAnimationLeft,
+    walkingAnimationRight, walkingAnimationUp;
 
-    Animation* currentAnimation;
+  Animation* currentAnimation;
 
-    sf::Vector2f mGridPos;
+  sf::Vector2f mGridPos;
 
-    sf::Vector2f mGridSize;
+  sf::Vector2f mGridSize;
 
 
 

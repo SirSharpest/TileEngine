@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "headers/Game.hpp"
 
-int main()
-{
-	Game newGame;
+int main(){
 
-	newGame.run();
+  Game newGame;
+  newGame.run();
 
-    return 0;
+  return 0;
 }

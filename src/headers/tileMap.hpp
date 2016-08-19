@@ -14,17 +14,17 @@ class tileMap : public sf::Drawable, public sf::Transformable {
 
 public:
 
-    tileMap();
+  tileMap();
 
-    void load(std::vector<int> tiles, int width, int height, std::string fileToLoad);
+  void load(std::vector<int> tiles, int width, int height, std::string fileToLoad);
 
 private:
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    sf::VertexArray quads;
+  sf::VertexArray quads;
 
-    sf::Texture m_tileset;
+  sf::Texture m_tileset;
 
 
 };

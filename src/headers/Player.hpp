@@ -14,16 +14,10 @@
 
 class Player : public Character{
 public:
-	Player(sf::Vector2f gridSize, float tileSize);
+  Player(sf::Vector2f gridSize, float tileSize);
 
-
-	virtual ~Player();
-	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-
-
-
-
-
+  virtual ~Player();
+  void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 };
 
 #endif /* PLAYER_H_ */
