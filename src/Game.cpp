@@ -5,9 +5,6 @@
  *      Author: Nathan Hughes
  */
 
-
-
-
 #include "headers/Game.hpp"
 #include <iostream>
 #include <sstream>
@@ -34,8 +31,7 @@ Game::Game():
   //setting window properties
   g_Window.setVerticalSyncEnabled(true);
   g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
-
-
+  
   //setting font location
   g_AlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
 
@@ -110,7 +106,6 @@ void Game::processEvents(){
 
     if(event.type == sf::Event::Closed)
       g_Window.close();
-
 
     if(g_GameState == INTRO){
       if(event.key.code == sf::Keyboard::Space){
@@ -262,14 +257,4 @@ void Game::setUpMap() {
   g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
 
 }
-
-
-
-
-
-
-
-
-
-
 

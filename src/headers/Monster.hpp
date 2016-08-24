@@ -24,28 +24,26 @@ public:
    */ 
   Monster();
 
-  
-
 private:
 
   /*
     Monsters will all have to have attributes/stats 
     that is to say attack power, defence rating, etc! 
     
-    To simplify the system we will say that an int
-    (TODO: possibly a char would be enough, check actual 
-    implementation and adapt) 
+    To simplify the system we will say that u char 
 
     Also I'm leaving sp. att/def and some other vital stats
     for now... 
    */
 
-  int mAttack, mDefence, mSpeed; 
-
+  unsigned char mAttack, mDefence, mSpeed;
+  
   std::string mName;
 
   //TODO: Species will need to be defined as another class somehow
-  //Mayhaps a class or enum(1-151) hardcoded to keep it safe? 
+  //Mayhaps a class or enum(1-151) hardcoded to keep it safe?
+
+  
 };
 
 #endif //SFML_MONSTER_HPP
