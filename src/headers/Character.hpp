@@ -18,7 +18,9 @@ public:
   virtual void setUp(std::string fileLocation, int h, int w, std::vector<sf::Vector2f> leftMovements,
                      std::vector<sf::Vector2f> rightMovements,
                      std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
+  
   virtual void updateCharacter(sf::Time elapsedTime);
+  
   void setupAnimation(sf::Texture &texture, int h, int w, std::vector<sf::Vector2f> leftMovements,
                       std::vector<sf::Vector2f> rightMovements,
                       std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
@@ -37,7 +39,7 @@ protected:
   bool mIsMovingUp, mIsMovingDown,
     mIsMovingLeft, mIsMovingRight,
     mIsTurbo, mIsMoving;
-
+  
   sf::Texture characterSprite;
 
   Animation walkingAnimationDown, walkingAnimationLeft,
@@ -48,8 +50,6 @@ protected:
   sf::Vector2f mGridPos;
 
   sf::Vector2f mGridSize;
-
-
 
 
 
