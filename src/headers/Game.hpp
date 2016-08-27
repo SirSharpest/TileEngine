@@ -37,33 +37,33 @@ private:
 
 
 private:
-  sf::RenderWindow g_Window;
-  SoundManager g_Sounds;
+  sf::RenderWindow gWindow;
+  SoundManager gSounds;
 
   //Creating font
-  sf::Font g_AlexandriaFont;
+  sf::Font gAlexandriaFont;
 
   const int FRAMES_PER_SECOND;
   const sf::Time TIME_PER_FRAME;
 
-  //g_Fps text object
-  sf::Text g_Fps;
-  sf::Time g_FpsTimer;
-  int g_FpsNumFrames;
+  //gFps text object
+  sf::Text gFps;
+  sf::Time gFpsTimer;
+  int gFpsNumFrames;
 
-  int g_GameState;
+  int gGameState;
   enum states{INTRO = 0, PLAYING = 1};
 
-  sf::Texture g_SplashScreenTexture;
-  sf::Sprite g_SplashScreenSprite;
-  sf::Sprite g_BackgroundSprite;
-  sf::Texture g_BackgroundTexture;
+  sf::Texture gSplashScreenTexture;
+  sf::Sprite gSplashScreenSprite;
+  sf::Sprite gBackgroundSprite;
+  sf::Texture gBackgroundTexture;
 
-  tileMap g_Map;
-  Player g_player;
+  tileMap gMap;
+  Player gplayer;
 
-  sf::Text g_scoreText;
-  u_int g_score;
+  sf::Text gScoreText;
+  u_int gScore;
 
 
 };

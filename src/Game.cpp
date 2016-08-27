@@ -10,46 +10,46 @@
 #include <sstream>
 
 Game::Game():
-  g_Window(sf::VideoMode(640, 640), "SFML"),
-  g_Sounds(),
-  g_AlexandriaFont(),
+  gWindow(sf::VideoMode(640, 640), "SFML"),
+  gSounds(),
+  gAlexandriaFont(),
   FRAMES_PER_SECOND(60),
   TIME_PER_FRAME(sf::seconds(1.f/FRAMES_PER_SECOND)),
-  g_Fps(),
-  g_FpsTimer(),
-  g_FpsNumFrames(),
-  g_GameState(0),
-  g_SplashScreenTexture(),
-  g_SplashScreenSprite(),
-  g_BackgroundSprite(),
-  g_BackgroundTexture(),
-  g_Map(),
-  g_player(sf::Vector2f(10,10), 64.f),
-  g_scoreText(),
-  g_score(0)
+  gFps(),
+  gFpsTimer(),
+  gFpsNumFrames(),
+  gGameState(0),
+  gSplashScreenTexture(),
+  gSplashScreenSprite(),
+  gBackgroundSprite(),
+  gBackgroundTexture(),
+  gMap(),
+  gplayer(sf::Vector2f(10,10), 64.f),
+  gScoreText(),
+  gScore(0)
 {
   //setting window properties
-  g_Window.setVerticalSyncEnabled(true);
-  g_Window.setFramerateLimit((unsigned int) FRAMES_PER_SECOND);
+  gWindow.setVerticalSyncEnabled(true);
+  gWindow.setFramerateLimit(FRAMES_PER_SECOND);
   
   //setting font location
-  g_AlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
+  gAlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
 
   //loading splash screen
-  g_SplashScreenTexture.loadFromFile("images/intro.png");
-  g_SplashScreenSprite.setTexture(g_SplashScreenTexture);
-  g_SplashScreenSprite.setPosition(0.f,0.f);
+  gSplashScreenTexture.loadFromFile("images/intro.png");
+  gSplashScreenSprite.setTexture(gSplashScreenTexture);
+  gSplashScreenSprite.setPosition(0.f,0.f);
 
-  //setting g_Fps info
-  g_Fps.setCharacterSize(20);
-  g_Fps.setFont(g_AlexandriaFont);
-  g_Fps.setPosition(0,0);
+  //setting gFps info
+  gFps.setCharacterSize(20);
+  gFps.setFont(gAlexandriaFont);
+  gFps.setPosition(0,0);
 
   //setting the score info
-  g_scoreText.setFont(g_AlexandriaFont);
-  g_scoreText.setPosition(220,150);
-  g_scoreText.setScale(10,10);
-  g_scoreText.setString("0");
+  gScoreText.setFont(gAlexandriaFont);
+  gScoreText.setPosition(220,150);
+  gScoreText.setScale(10,10);
+  gScoreText.setString("0");
 
 
   //Set up some of the finner details of the game
@@ -58,7 +58,7 @@ Game::Game():
 
   //Perform some sound loading
   //TODO formalize and make nice to work with
-  g_Sounds.addTrack("music/background01.wav");
+  gSounds.addTrack("music/background01.wav");
 
   /* initialize random seed: */
   srand ((unsigned int) time(NULL));
@@ -72,12 +72,12 @@ void Game::run(){
   sf::Clock clock;
   sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-  //setting g_GameState to be intro on run
-  g_GameState = 0;
+  //setting gGameState to be intro on run
+  gGameState = 0;
 
   //main loop to run the entire length of games
   //life
-  while (g_Window.isOpen()) {
+  while (gWindow.isOpen()) {
     sf::Time dt = clock.restart();
     timeSinceLastUpdate += dt;
 
@@ -101,26 +101,26 @@ void Game::processEvents(){
 
   sf::Event event;
 
-  while(g_Window.pollEvent(event)){
+  while(gWindow.pollEvent(event)){
 
 
     if(event.type == sf::Event::Closed)
-      g_Window.close();
+      gWindow.close();
 
-    if(g_GameState == INTRO){
+    if(gGameState == INTRO){
       if(event.key.code == sf::Keyboard::Space){
-        g_GameState = PLAYING;
+        gGameState = PLAYING;
       }
     }
 
-    if(g_GameState == PLAYING){
+    if(gGameState == PLAYING){
 
       if(event.key.code == sf::Keyboard::Escape)
-        g_GameState = INTRO;
+        gGameState = INTRO;
 
       //Handle a key being pressed
       if(event.type == sf::Event::KeyPressed){
-        g_player.handlePlayerInput(event.key.code, true);
+        gplayer.handlePlayerInput(event.key.code, true);
       }
 
     }
@@ -134,7 +134,7 @@ void Game::update(sf::Time elapsedTime){
 
 
   handleCollisions();
-  g_player.updateCharacter(elapsedTime);
+  gplayer.updateCharacter(elapsedTime);
 
 }
 
@@ -145,24 +145,23 @@ void Game::handleCollisions(){
   /*
    * TODO: Add some
    */
-
 }
 
 
 void Game::updateFPSCounter(sf::Time dt){
 
-  g_FpsTimer += dt;
-  g_FpsNumFrames += 1;
+  gFpsTimer += dt;
+  gFpsNumFrames += 1;
 
-  if( g_FpsTimer >= sf::seconds(1.0f)){
+  if( gFpsTimer >= sf::seconds(1.0f)){
 
     std::ostringstream ss;
 
-    ss << g_FpsNumFrames;
-    g_Fps.setString(ss.str());
+    ss << gFpsNumFrames;
+    gFps.setString(ss.str());
 
-    g_FpsTimer -= sf::seconds(1.0f);
-    g_FpsNumFrames = 0;
+    gFpsTimer -= sf::seconds(1.0f);
+    gFpsNumFrames = 0;
   }
 
 }
@@ -171,37 +170,37 @@ void Game::updateFPSCounter(sf::Time dt){
 void Game::render(){
 
   //wipe window clear
-  g_Window.clear(sf::Color::Black);
+  gWindow.clear(sf::Color::Black);
 
-  switch (g_GameState) {
+  switch (gGameState) {
   case INTRO:
     //draw splash screen
-    g_Window.draw(g_SplashScreenSprite);
+    gWindow.draw(gSplashScreenSprite);
     break;
   case PLAYING:
-    g_Window.draw(g_Map);
-    g_Window.draw(g_player);
+    gWindow.draw(gMap);
+    gWindow.draw(gplayer);
     break;
   default:
     break;
   }
 
   //display new screen layout
-  g_Window.draw(g_Fps);
-  g_Window.display();
+  gWindow.draw(gFps);
+  gWindow.display();
 
 
 }
 
 
 void Game::playSounds() {
-  switch (g_GameState){
+  switch (gGameState){
 
   case INTRO:
-    g_Sounds.stopMusic();
+    gSounds.stopMusic();
     break;
   case PLAYING:
-    g_Sounds.playBackgroundMusic();
+    gSounds.playBackgroundMusic();
     break;
   default:
     break;
@@ -236,7 +235,7 @@ void Game::setUpPlayerMovements() {
   downMovements.push_back(sf::Vector2f(124, 0));
   downMovements.push_back(sf::Vector2f(186, 0));
 
-  g_player.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
+  gplayer.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
 
 
 }
@@ -254,7 +253,7 @@ void Game::setUpMap() {
   }
 
   //10x10
-  g_Map.load(myVec, 10, 10, "images/spriteSheet.png");
+  gMap.load(myVec, 10, 10, "images/spriteSheet.png");
 
 }
 
