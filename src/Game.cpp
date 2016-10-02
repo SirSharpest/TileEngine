@@ -48,7 +48,7 @@ Game::Game():
   setUpPlayerMovements();
 
   //Perform some sound loading
-  //TODO formalize and make nice to work with
+  //TODO formalise and make nice to work with
   gSounds.addTrack("music/background01.wav");
 
   // initialise random seed:
