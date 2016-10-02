@@ -38,7 +38,7 @@ bool SoundManager::exists(std::string fileLocation) {
         mCollection.begin(); it!=mCollection.end(); ++it){
 
     if(fileLocation == it->first){
-      std::cout << "File already exists in memory" << std::endl;
+      std::cerr << "File already exists in memory" << std::endl;
       return true;
     }
   }

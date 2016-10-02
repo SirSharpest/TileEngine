@@ -38,6 +38,7 @@ private:
 
 private:
   sf::RenderWindow gWindow;
+  sf::View gPlayerView;
   SoundManager gSounds;
 
   //Creating font
@@ -54,15 +55,21 @@ private:
   int gGameState;
   enum states{INTRO = 0, PLAYING = 1, MENU = 2};
 
+  //Sprites and texture objects 
   sf::Texture gSplashScreenTexture;
   sf::Sprite gSplashScreenSprite;
   sf::Sprite gBackgroundSprite;
   sf::Texture gBackgroundTexture;
 
+  //Tile map 
   tileMap gMap;
-  Player gplayer;
 
+  //Player object
+  Player gPlayer;
 
+  //Constants defined below
+  const float gTileSize;
+ 
 };
 
 #endif /* GAME_H_ */

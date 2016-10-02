@@ -11,6 +11,7 @@
 
 Game::Game():
   gWindow(sf::VideoMode(640, 640), "SFML"),
+  gPlayerView(sf::FloatRect(0, 0, 640, 640)),
   gSounds(),
   gAlexandriaFont(),
   FRAMES_PER_SECOND(60),
@@ -24,11 +25,13 @@ Game::Game():
   gBackgroundSprite(),
   gBackgroundTexture(),
   gMap(),
-  gplayer(sf::Vector2f(10,10), 64.f)
+  gPlayer(sf::Vector2f(10,10), 64.f),
+  gTileSize(64.0)
 {
   //setting window properties
   gWindow.setVerticalSyncEnabled(true);
   gWindow.setFramerateLimit(FRAMES_PER_SECOND);
+  gWindow.setView(gPlayerView);
   
   //setting font location
   gAlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
@@ -42,7 +45,7 @@ Game::Game():
   gFps.setCharacterSize(20);
   gFps.setFont(gAlexandriaFont);
   gFps.setPosition(0,0);
-
+  
   //Set up some of the finner details of the game
   setUpMap();
   setUpPlayerMovements();
@@ -107,10 +110,8 @@ void Game::processEvents(){
     //Handle the input from the menu, this should display a few options
     //and provide access to other menus TODO: Add other menu's and states! 
     if(gGameState == MENU){
-
       if(event.key.code == sf::Keyboard::Return)
-	gGameState = PLAYING;
-      
+	gGameState = PLAYING;      
     }
 
     //Handle events that occur whilst in the main playing state
@@ -122,7 +123,7 @@ void Game::processEvents(){
 
       //Handle a key being pressed whilst in game
       if(event.type == sf::Event::KeyPressed){
-        gplayer.handlePlayerInput(event.key.code, true);
+        gPlayer.handlePlayerInput(event.key.code, true);
       }
 
     }
@@ -135,7 +136,7 @@ void Game::processEvents(){
 void Game::update(sf::Time elapsedTime){
 
   handleCollisions();
-  gplayer.updateCharacter(elapsedTime);
+  gPlayer.updateCharacter(elapsedTime);
 
 }
 
@@ -180,7 +181,9 @@ void Game::render(){
     break;
   case PLAYING:
     gWindow.draw(gMap);
-    gWindow.draw(gplayer);
+    gWindow.draw(gPlayer);
+    gPlayerView.setCenter((gPlayer.getPosition()->x * gTileSize), (gPlayer.getPosition()->y * gTileSize) );
+    gWindow.setView(gPlayerView);
     break;
   default:
     break;
@@ -236,7 +239,7 @@ void Game::setUpPlayerMovements() {
   downMovements.push_back(sf::Vector2f(124, 0));
   downMovements.push_back(sf::Vector2f(186, 0));
 
-  gplayer.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
+  gPlayer.setUp(character,62, 62, leftMovements, rightMovements, upMovements, downMovements);
 
 
 }
