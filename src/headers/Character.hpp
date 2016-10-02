@@ -31,7 +31,8 @@ public:
 protected:
 
   //properties of the player
-  float mSpeed, mTileSize, mTravelled;
+  float mSpeed, mTileSize;
+  int mTravelled;
   sf::Vector2f movement;
   sf::Vector2f mSize;
 

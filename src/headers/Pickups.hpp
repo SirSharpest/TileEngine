@@ -17,7 +17,7 @@ class Pickups : public sf::Sprite{
 private:
   sf::Texture m_image;
   sf::Vector2f m_position, m_size;
-  int m_posX, posY;
+  //  int m_posX, posY;
 
 
 public:

@@ -52,7 +52,7 @@ private:
   int gFpsNumFrames;
 
   int gGameState;
-  enum states{INTRO = 0, PLAYING = 1};
+  enum states{INTRO = 0, PLAYING = 1, MENU = 2};
 
   sf::Texture gSplashScreenTexture;
   sf::Sprite gSplashScreenSprite;
@@ -61,9 +61,6 @@ private:
 
   tileMap gMap;
   Player gplayer;
-
-  sf::Text gScoreText;
-  u_int gScore;
 
 
 };

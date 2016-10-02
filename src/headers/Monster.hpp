@@ -36,9 +36,9 @@ private:
     for now... 
    */
 
-  unsigned char mAttack, mDefence, mSpeed;
+  //  unsigned char mAttack, mDefence, mSpeed;
   
-  std::string mName;
+  //std::string mName;
 
   //TODO: Species will need to be defined as another class somehow
   //Mayhaps a class or enum(1-151) hardcoded to keep it safe?

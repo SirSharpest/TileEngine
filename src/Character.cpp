@@ -90,8 +90,8 @@ void Character::updateCharacter(sf::Time elapsedTime) {
   this->update(elapsedTime);
 
   //One of these should be 0 and the other a value anyway, so can cheat a little and sum both
-  mTravelled += abs(
-                    (int) ((totalMovement.x * elapsedTime.asSeconds()) + (totalMovement.y * elapsedTime.asSeconds())));
+  mTravelled += abs(static_cast<int>((totalMovement.x * elapsedTime.asSeconds()) +
+		      (totalMovement.y * elapsedTime.asSeconds())));
 
 
 
@@ -117,27 +117,35 @@ void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<s
                                std::vector<sf::Vector2f> downMovements) {
 
 
-  for(int i = 0; i < leftMovements.size(); i++){
-    walkingAnimationLeft.addFrame(sf::IntRect((int) leftMovements[i].x, (int) leftMovements[i].y, w, h));
+  for(u_int i = 0; i < leftMovements.size(); i++){
+    walkingAnimationLeft.addFrame(sf::IntRect(static_cast<int>(leftMovements[i].x),
+					      static_cast<int>(leftMovements[i].y),
+					      w, h));
   }
   walkingAnimationLeft.setSpriteSheet(texture);
 
-  for(int i = 0; i < rightMovements.size(); i++){
-    walkingAnimationRight.addFrame(sf::IntRect((int) rightMovements[i].x, (int) rightMovements[i].y, w, h));
+  for(u_int i = 0; i < rightMovements.size(); i++){
+    walkingAnimationRight.addFrame(sf::IntRect(static_cast<int>(rightMovements[i].x),
+					       static_cast<int>(rightMovements[i].y)
+					       , w, h));
   }
   walkingAnimationRight.setSpriteSheet(texture);
 
-  for(int i = 0; i < upMovements.size(); i++){
-    walkingAnimationUp.addFrame(sf::IntRect((int) upMovements[i].x, (int) upMovements[i].y, w, h));
+  for(u_int i = 0; i < upMovements.size(); i++){
+    walkingAnimationUp.addFrame(sf::IntRect(static_cast<int>(upMovements[i].x),
+					    static_cast<int>( upMovements[i].y),
+					    w, h));
   }
   walkingAnimationUp.setSpriteSheet(texture);
 
-  for(int i = 0; i < downMovements.size(); i++){
-    walkingAnimationDown.addFrame(sf::IntRect((int) downMovements[i].x, (int) downMovements[i].y, w, h));
+  for(u_int i = 0; i < downMovements.size(); i++){
+    walkingAnimationDown.addFrame(sf::IntRect(static_cast<int>( downMovements[i].x),
+					      static_cast<int> (downMovements[i].y),
+					      w, h));
   }
   walkingAnimationDown.setSpriteSheet(texture);
 
-  this->setFrameTime(sf::seconds(0.1));
+  this->setFrameTime(sf::seconds(0.1f));
 
 }
 

@@ -24,9 +24,7 @@ Game::Game():
   gBackgroundSprite(),
   gBackgroundTexture(),
   gMap(),
-  gplayer(sf::Vector2f(10,10), 64.f),
-  gScoreText(),
-  gScore(0)
+  gplayer(sf::Vector2f(10,10), 64.f)
 {
   //setting window properties
   gWindow.setVerticalSyncEnabled(true);
@@ -45,13 +43,6 @@ Game::Game():
   gFps.setFont(gAlexandriaFont);
   gFps.setPosition(0,0);
 
-  //setting the score info
-  gScoreText.setFont(gAlexandriaFont);
-  gScoreText.setPosition(220,150);
-  gScoreText.setScale(10,10);
-  gScoreText.setString("0");
-
-
   //Set up some of the finner details of the game
   setUpMap();
   setUpPlayerMovements();
@@ -60,8 +51,8 @@ Game::Game():
   //TODO formalize and make nice to work with
   gSounds.addTrack("music/background01.wav");
 
-  /* initialize random seed: */
-  srand ((unsigned int) time(NULL));
+  // initialise random seed:
+  srand(static_cast<u_int>(time(nullptr)));
 
 }
 
@@ -81,7 +72,6 @@ void Game::run(){
     sf::Time dt = clock.restart();
     timeSinceLastUpdate += dt;
 
-
     while(timeSinceLastUpdate > TIME_PER_FRAME) {
 
       timeSinceLastUpdate -= TIME_PER_FRAME;
@@ -99,39 +89,52 @@ void Game::run(){
 //process input events
 void Game::processEvents(){
 
+  //Event objects that pass through this window/game
   sf::Event event;
 
   while(gWindow.pollEvent(event)){
 
-
+    // If the window is closed, then clean up here! 
     if(event.type == sf::Event::Closed)
       gWindow.close();
 
+    //Handle some input for the intro state 
     if(gGameState == INTRO){
       if(event.key.code == sf::Keyboard::Space){
         gGameState = PLAYING;
       }
     }
+    
+    //Handle the input from the menu, this should display a few options
+    //and provide access to other menus TODO: Add other menu's and states! 
+    if(gGameState == MENU){
 
+      if(event.key.code == sf::Keyboard::Return)
+	gGameState = PLAYING;
+      
+    }
+
+    //Handle events that occur whilst in the main playing state
     if(gGameState == PLAYING){
 
+      //Swap to the menu 
       if(event.key.code == sf::Keyboard::Escape)
-        gGameState = INTRO;
+	gGameState = MENU; 
 
-      //Handle a key being pressed
+      //Handle a key being pressed whilst in game
       if(event.type == sf::Event::KeyPressed){
         gplayer.handlePlayerInput(event.key.code, true);
       }
 
     }
 
+    std::cout << gGameState; 
   }
 
 }
 
 //perform logic and call for collision checks
 void Game::update(sf::Time elapsedTime){
-
 
   handleCollisions();
   gplayer.updateCharacter(elapsedTime);

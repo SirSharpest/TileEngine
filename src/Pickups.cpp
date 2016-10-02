@@ -5,6 +5,7 @@
 #include "headers/Pickups.hpp"
 
 Pickups::Pickups(){
+  
 }
 
 

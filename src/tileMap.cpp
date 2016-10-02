@@ -23,8 +23,8 @@ void tileMap::load(std::vector<int> tiles, int width, int height, std::string fi
 
 
   // populate the vertex array, with one quad per tile
-  for (unsigned int i = 0; i < width; ++i)
-    for (unsigned int j = 0; j < height; ++j)
+  for (int i = 0; i < width; ++i){
+    for ( int j = 0; j < height; ++j)
       {
         // get the current tile number
         int tileNumber = tiles[i + j * width];
@@ -48,6 +48,7 @@ void tileMap::load(std::vector<int> tiles, int width, int height, std::string fi
         quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize, (tv + 1) * tileSize);
         quad[3].texCoords = sf::Vector2f(tu * tileSize, (tv + 1) * tileSize);
       }
+  }
 
 }
 
