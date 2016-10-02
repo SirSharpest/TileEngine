@@ -35,7 +35,7 @@ void SoundManager::playBackgroundMusic() {
 bool SoundManager::exists(std::string fileLocation) {
   //first check if track exists
   for(std::map<std::string, std::unique_ptr<sf::Music>>::const_iterator it =
-        mCollection.begin(); it!=mCollection.end(); it++){
+        mCollection.begin(); it!=mCollection.end(); ++it){
 
     if(fileLocation == it->first){
       std::cout << "File already exists in memory" << std::endl;
@@ -50,7 +50,7 @@ void SoundManager::stopMusic() {
   //Stop all music
 
   for(std::map<std::string, std::unique_ptr<sf::Music>>::const_iterator it =
-        mCollection.begin(); it!=mCollection.end(); it++) {
+        mCollection.begin(); it!=mCollection.end(); ++it) {
     if(it->second->getStatus() == sf::Music::Playing){
       it->second->pause();
     }

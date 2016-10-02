@@ -48,7 +48,6 @@ Game::Game():
   setUpPlayerMovements();
 
   //Perform some sound loading
-  //TODO formalise and make nice to work with
   gSounds.addTrack("music/background01.wav");
 
   // initialise random seed:
@@ -128,7 +127,6 @@ void Game::processEvents(){
 
     }
 
-    std::cout << gGameState; 
   }
 
 }
