@@ -5,11 +5,9 @@
 #ifndef SFML2_MENU_HPP
 #define SFML2_MENU_HPP
 
-
-#include <SFML/Graphics/Sprite.hpp>
 #include <string>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 
 class Menu : public sf::Drawable{
@@ -30,7 +28,7 @@ public:
   /**
    * This is required when inheriting from the Drawable SFML class
    */
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 };
 

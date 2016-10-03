@@ -51,11 +51,6 @@ protected:
   sf::Vector2f mGridPos;
 
   sf::Vector2f mGridSize;
-
-
-
-
-
 };
 
 

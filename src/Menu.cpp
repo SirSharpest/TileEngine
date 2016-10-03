@@ -4,4 +4,10 @@
 
 #include "headers/Menu.hpp"
 
-Menu::Menu();
+Menu::Menu(){
+
+}
+
+void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+
+}
