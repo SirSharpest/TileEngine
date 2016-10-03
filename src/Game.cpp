@@ -26,7 +26,7 @@ Game::Game():
   gBackgroundTexture(),
   gMap(),
   gPlayer(sf::Vector2f(10,10), 64.f),
-  gTileSize(64.0)
+  TILE_SIZE(64.0)
 {
   //setting window properties
   gWindow.setVerticalSyncEnabled(true);
@@ -182,7 +182,7 @@ void Game::render(){
   case PLAYING:
     gWindow.draw(gMap);
     gWindow.draw(gPlayer);
-    gPlayerView.setCenter((gPlayer.getPosition()->x * gTileSize), (gPlayer.getPosition()->y * gTileSize) );
+    gPlayerView.setCenter((gPlayer.getPosition()->x * TILE_SIZE), (gPlayer.getPosition()->y * TILE_SIZE) );
     gWindow.setView(gPlayerView);
     break;
   default:

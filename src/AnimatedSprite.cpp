@@ -177,7 +177,7 @@ void AnimatedSprite::update(sf::Time deltaTime)
     }
 }
 
-void AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const 
 {
     if (m_animation && m_texture)
     {

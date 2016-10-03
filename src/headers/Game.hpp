@@ -21,9 +21,7 @@ class Game {
 public:
   Game();
   void run();
-
-
-
+  
   //private functions
 private:
   void update(sf::Time elapsedTime);
@@ -35,7 +33,7 @@ private:
   void setUpPlayerMovements();
   void playSounds();
 
-
+  //private internal objects/variables
 private:
   sf::RenderWindow gWindow;
   sf::View gPlayerView;
@@ -68,7 +66,7 @@ private:
   Player gPlayer;
 
   //Constants defined below
-  const float gTileSize;
+  const float TILE_SIZE;
  
 };
 
