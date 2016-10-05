@@ -18,7 +18,7 @@ private:
   // This vector contains all of the menu items 
   std::vector<sf::Text> gMenuItems; 
   sf::Font * gMenuFontPtr;
-  const int MENU_SPACING; 
+  const unsigned int MENU_SPACING; 
 public:
 
   /**

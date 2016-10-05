@@ -12,13 +12,12 @@ Menu::Menu():
 }
 
 
-
 void Menu::addItem(std::string menuItem){
 
   sf::Text tmpText;
   tmpText.setFont(*gMenuFontPtr);
   tmpText.setString(menuItem);
-  tmpText.setPosition(50, 50+(gMenuItems.size()*MENU_SPACING));
+  tmpText.setPosition(50.0, float(50+(gMenuItems.size()*MENU_SPACING)));
   tmpText.setFillColor(sf::Color::Magenta);
   gMenuItems.push_back(tmpText);
 
@@ -33,7 +32,6 @@ std::string getItem();
 
 
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-
 
   // draw the menu item list
   for (auto  &item : gMenuItems){

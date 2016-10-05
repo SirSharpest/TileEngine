@@ -189,10 +189,14 @@ void Game::render(){
   case PLAYING:
     gWindow.draw(gMap);
     gWindow.draw(gPlayer);
+    //Set view relative to player
     gPlayerView.setCenter((gPlayer.getPosition()->x * TILE_SIZE), (gPlayer.getPosition()->y * TILE_SIZE) );
     gWindow.setView(gPlayerView);
     break;
   case MENU:
+    //Reset View for the menu to display properly (TODO Write a custom view for the menu) 
+    gWindow.draw(gMap);
+    gWindow.draw(gPlayer);
     gWindow.draw(gMenu);
     break;
   default:
