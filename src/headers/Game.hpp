@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "SoundManager.hpp"
+#include "Menu.hpp"
 
 #ifndef GAME_H_
 #define GAME_H_
@@ -65,9 +66,12 @@ private:
   //Player object
   Player gPlayer;
 
-  //Constants defined below
+  //Const for tile size 
   const float TILE_SIZE;
- 
+
+  // Load the menu object
+  Menu gMenu; 
+
 };
 
 #endif /* GAME_H_ */

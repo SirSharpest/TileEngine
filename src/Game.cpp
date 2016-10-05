@@ -26,8 +26,9 @@ Game::Game():
   gBackgroundTexture(),
   gMap(),
   gPlayer(sf::Vector2f(10,10), 64.f),
-  TILE_SIZE(64.0)
-{
+  TILE_SIZE(64.0),
+  gMenu(){
+  
   //setting window properties
   gWindow.setVerticalSyncEnabled(true);
   gWindow.setFramerateLimit(FRAMES_PER_SECOND);
@@ -36,6 +37,12 @@ Game::Game():
   //setting font location
   gAlexandriaFont.loadFromFile("fonts/AlexandriaFLF.ttf");
 
+  //after loading some of the text information
+  //setup the menu as all is already loaded!
+  gMenu.setMenuFont(&gAlexandriaFont);
+  gMenu.addItem("Item 1"); // Texting items
+  gMenu.addItem("Item 2"); 
+  
   //loading splash screen
   gSplashScreenTexture.loadFromFile("images/intro.png");
   gSplashScreenSprite.setTexture(gSplashScreenTexture);
@@ -184,6 +191,9 @@ void Game::render(){
     gWindow.draw(gPlayer);
     gPlayerView.setCenter((gPlayer.getPosition()->x * TILE_SIZE), (gPlayer.getPosition()->y * TILE_SIZE) );
     gWindow.setView(gPlayerView);
+    break;
+  case MENU:
+    gWindow.draw(gMenu);
     break;
   default:
     break;

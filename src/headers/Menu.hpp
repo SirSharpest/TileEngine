@@ -12,31 +12,33 @@
 #include <vector>
 
 class Menu : public sf::Drawable{
-
+  
 private:
 
-// This vector contains all of the menu items 
-std::vector<sf::Text> gMenuItems; 
-
+  // This vector contains all of the menu items 
+  std::vector<sf::Text> gMenuItems; 
+  sf::Font * gMenuFontPtr;
+  const int MENU_SPACING; 
 public:
 
-/**
- * Setup the menu system
- */
-Menu();
+  /**
+   * Setup the menu system
+   */
+  Menu();
 
-/**
- * Setters, getters for menu items 
- */
-void addItem(std::string menuItem);
-std::string getItem(); 
+  /**
+   * Setters, getters for menu items 
+   */
+  void addItem(std::string menuItem);
+  void setMenuFont(sf::Font *fontPtr);
+  std::string getItem(); 
 
 protected:
 
-/**
- * This is required when inheriting from the Drawable SFML class
- */
-virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  /**
+   * This is required when inheriting from the Drawable SFML class
+   */
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 };
 
