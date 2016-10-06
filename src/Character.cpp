@@ -99,7 +99,7 @@ void Character::updateCharacter(sf::Time elapsedTime) {
   //And turn movement off.
   if(mTravelled >= mTileSize && mIsMoving){
 
-    this->setPosition(mGridPos.x * 64, mGridPos.y * 64);
+    this->setPosition(mGridPos.x * 64, mGridPos.y * 64); // This 64 thing is fucked if we change tile size! TODO:
 
     mIsMovingDown = false;
     mIsMovingUp = false;
@@ -108,7 +108,6 @@ void Character::updateCharacter(sf::Time elapsedTime) {
     mIsMoving = false;
 
   }
-
 
 }
 

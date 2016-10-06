@@ -4,7 +4,7 @@
  *  Created on: 2 Apr 2015
  *      Author: nathan
  *
- *  Currently loads a  sprite
+ *  Handles the operations for the player object 
  *
  */
 

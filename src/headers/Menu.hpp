@@ -18,7 +18,8 @@ private:
   // This vector contains all of the menu items 
   std::vector<sf::Text> gMenuItems; 
   sf::Font * gMenuFontPtr;
-  const unsigned int MENU_SPACING; 
+  const unsigned int MENU_SPACING;
+  sf::View gMenuView; 
 public:
 
   /**
@@ -31,7 +32,12 @@ public:
    */
   void addItem(std::string menuItem);
   void setMenuFont(sf::Font *fontPtr);
-  std::string getItem(); 
+  std::string getItem();
+
+  /**
+   * Handle the input for the menu! 
+   */
+  void handleMenuInput(sf::Keyboard::Key key, bool isPressed);
 
 protected:
 

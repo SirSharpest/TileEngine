@@ -118,7 +118,11 @@ void Game::processEvents(){
     //and provide access to other menus TODO: Add other menu's and states! 
     if(gGameState == MENU){
       if(event.key.code == sf::Keyboard::Return)
-	gGameState = PLAYING;      
+	gGameState = PLAYING;
+
+      if(event.type == sf::Event::KeyPressed){
+	gMenu.handleMenuInput(event.key.code, true);
+      }
     }
 
     //Handle events that occur whilst in the main playing state
@@ -180,7 +184,7 @@ void Game::render(){
 
   //wipe window clear
   gWindow.clear(sf::Color::Black);
-
+  
   switch (gGameState) {
   case INTRO:
     //draw splash screen
@@ -189,14 +193,12 @@ void Game::render(){
   case PLAYING:
     gWindow.draw(gMap);
     gWindow.draw(gPlayer);
-    //Set view relative to player
+    //Set view relative to player (TODO: move these lines to the player class 
     gPlayerView.setCenter((gPlayer.getPosition()->x * TILE_SIZE), (gPlayer.getPosition()->y * TILE_SIZE) );
     gWindow.setView(gPlayerView);
     break;
   case MENU:
     //Reset View for the menu to display properly (TODO Write a custom view for the menu) 
-    gWindow.draw(gMap);
-    gWindow.draw(gPlayer);
     gWindow.draw(gMenu);
     break;
   default:
