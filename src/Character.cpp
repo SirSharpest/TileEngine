@@ -149,6 +149,8 @@ void Character::setupAnimation(sf::Texture &texture, int h, int w, std::vector<s
 }
 
 
-sf::Vector2f *Character::getPosition() {
+sf::Vector2f* Character::getGridPos() {
   return &mGridPos;
 }
+
+

@@ -40,6 +40,7 @@ std::string Menu::getItem(){
 void Menu::handleMenuInput(sf::Keyboard::Key key, bool isPressed){
 
   //place holder
+  
 
 }
 

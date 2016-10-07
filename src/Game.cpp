@@ -117,8 +117,9 @@ void Game::processEvents(){
     //Handle the input from the menu, this should display a few options
     //and provide access to other menus TODO: Add other menu's and states! 
     if(gGameState == MENU){
-      if(event.key.code == sf::Keyboard::Return)
+      if(event.key.code == sf::Keyboard::Return){
 	gGameState = PLAYING;
+      }
 
       if(event.type == sf::Event::KeyPressed){
 	gMenu.handleMenuInput(event.key.code, true);
@@ -194,7 +195,7 @@ void Game::render(){
     gWindow.draw(gMap);
     gWindow.draw(gPlayer);
     //Set view relative to player (TODO: move these lines to the player class 
-    gPlayerView.setCenter((gPlayer.getPosition()->x * TILE_SIZE), (gPlayer.getPosition()->y * TILE_SIZE) );
+    gPlayerView.setCenter(gPlayer.getPosition());
     gWindow.setView(gPlayerView);
     break;
   case MENU:

@@ -25,7 +25,8 @@ public:
                       std::vector<sf::Vector2f> rightMovements,
                       std::vector<sf::Vector2f> upMovements, std::vector<sf::Vector2f> downMovements);
 
-  sf::Vector2f* getPosition();
+  // This returns the grid position of the player
+  sf::Vector2f* getGridPos();
 
 
 protected:

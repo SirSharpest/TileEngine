@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <string.h>
 #include "Player.hpp"
-#include "tileMap.hpp"
+#include "TileMap.hpp"
 #include "Pickups.hpp"
 #include <stdlib.h>
 #include <time.h>
@@ -61,7 +61,7 @@ private:
   sf::Texture gBackgroundTexture;
 
   //Tile map 
-  tileMap gMap;
+  TileMap gMap;
 
   //Player object
   Player gPlayer;
